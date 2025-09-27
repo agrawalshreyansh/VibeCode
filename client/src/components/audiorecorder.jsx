@@ -35,12 +35,12 @@ export default function SpeechToTextRecorder() {
     recognitionRef.current?.stop();
     setRecording(false);
 
-    fetch("http://localhost:8000/process-text", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ text: transcript }),
-    });
-
+    // Instead of sending to API, you could integrate this with the chat context
+    // For now, we'll just log the transcript
+    if (transcript.trim()) {
+      console.log('Speech transcript:', transcript);
+      // You could emit a custom event or use a callback prop to send this to the chat
+    }
   };
 
   return (
