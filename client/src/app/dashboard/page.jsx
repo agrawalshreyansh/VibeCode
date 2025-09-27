@@ -1,4 +1,5 @@
-'use client';
+"use client";
+
 import Navbar from '@/components/navbar';
 import React, { useState, useEffect } from 'react';
 import { Search, Bell, Settings, User, BarChart3, Users, Calendar, Award, ChevronRight } from 'lucide-react';
@@ -11,26 +12,22 @@ const MoodMateDashboard = () => {
   const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
-    // Check if user is logged in
-    const authData = localStorage.getItem('userAuth');
-    if (!authData) {
+    // Check authentication
+    const storedCredentials = localStorage.getItem('credentials');
+    if (!storedCredentials) {
       router.push('/auth');
+      return;
     }
+
+    // Set user data
+    const userData = JSON.parse(storedCredentials);
+    setUserName(userData.name || 'User');
   }, [router]);
 
-  useEffect(() => {
-    // Get user data from localStorage
-    const healthData = localStorage.getItem('healthAssessment');
-    if (healthData) {
-      const userData = JSON.parse(healthData);
-      setUserName(userData.name || 'User');
-    }
-
-    const interval = setInterval(() => {
-      setAnimationKey(prev => prev + 1);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+  // Early return if no auth
+  if (!userName) {
+    return null;
+  }
 
   const chartData = [
     { day: 'Mon', value: 95, peak: true },

@@ -3,13 +3,13 @@
 import React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 // Using standard lucide icons that are closest matches to the image
-import { BarChart3, Users, User, ArrowLeft, Settings, LogOut } from 'lucide-react'; 
+import { LayoutDashboard, Users, User, ArrowLeft, Settings, LogOut } from 'lucide-react'; 
 
 // Define navigation items with their icons and routes.
 const navItems = [
-  { id: 'stats', icon: BarChart3, route: '/dashboard' }, 
+  { id: 'stats', icon: LayoutDashboard, route: '/dashboard' }, 
   { id: 'users', icon: Users, route: '/chat', notificationCount: 8 }, 
-  { id: 'profile', icon: User, route: '/profile-placeholder' }, 
+  { id: 'profile', icon: User, route: '/profile' }, 
 ];
 
 // Helper component for the Custom Logo at the top (The four droplet shape)
@@ -29,8 +29,7 @@ export default function Sidebar() {
   const router = useRouter();
   const pathname = usePathname(); 
 
-  // The active route in the image visually appears to be the second item, '/dashboard'
-  const activePath = '/dashboard'; 
+  console.log('Current pathname:', pathname)
   
   // Custom dark brown/black color from the image
   const sidebarBg = 'bg-stone-900'; 
@@ -48,9 +47,6 @@ export default function Sidebar() {
     let wrapperClasses = ''; 
 
     if (isActive) {
-      wrapperClasses = `w-12 h-12 ${accentColor} rounded-lg shadow-lg relative -left-4`;
-      iconClasses = 'w-5 h-5 text-stone-900';
-    } else if (item.notificationCount) {
       wrapperClasses = `w-12 h-12 rounded-full bg-amber-800 flex items-center justify-center`;
       iconClasses = 'w-6 h-6 text-white';
     } else {
@@ -60,17 +56,13 @@ export default function Sidebar() {
     return (
       <div
         className={itemClasses}
-        onClick={() => router.push(item.route)}
+        onClick={() => {
+          router.push(item.route);
+        }}
       >
         <div className={wrapperClasses}>
           <Icon className={iconClasses} />
         </div>
-        {/* Notification Badge */}
-        {item.notificationCount && (
-          <div className="absolute top-1 right-2 w-6 h-6 bg-orange-600 rounded-full flex items-center justify-center border-2 border-stone-900 text-white text-xs font-bold">
-            {item.notificationCount}
-          </div>
-        )}
       </div>
     );
   };
@@ -99,21 +91,13 @@ export default function Sidebar() {
       */}
       <div className="flex flex-col gap-4">
         {navItems.map((item) => (
-          <NavItem key={item.id} item={item} isActive={item.route === activePath} />
+          <NavItem key={item.id} item={item} isActive={item.route === pathname} />
         ))}
       </div>
 
       {/* Bottom Back/Return Button 
           Removed mt-auto as justify-between handles spacing
       */}
-      <div className="mb-4 w-16 h-16 flex items-center justify-center">
-        <div 
-          className="w-12 h-12 rounded-full border-2 border-stone-700 flex items-center justify-center cursor-pointer hover:bg-white/10 transition-all duration-300"
-          onClick={() => router.back()} 
-        >
-          <ArrowLeft className="w-6 h-6 text-white/70 transform rotate-180" /> 
-        </div>
-      </div>
 
       {/* Logout and Settings Buttons */}
       <div className="space-y-4">

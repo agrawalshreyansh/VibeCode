@@ -1,8 +1,9 @@
 "use client";
 
 import React, { useState } from "react";
+import { Mic, MicOff } from 'lucide-react';
 
-export default function SpeechToTextRecorder() {
+export default function SpeechToTextRecorder({ onTranscriptComplete, onTranscriptChange }) {
   const [recording, setRecording] = useState(false);
   const [transcript, setTranscript] = useState("");
   const recognitionRef = React.useRef(null);
@@ -24,6 +25,15 @@ export default function SpeechToTextRecorder() {
         text += event.results[i][0].transcript;
       }
       setTranscript(text);
+      // Update parent component with current transcript
+      onTranscriptChange?.(text, true);
+    };
+
+    recognition.onend = () => {
+      if (transcript.trim()) {
+        onTranscriptChange?.(transcript.trim(), false);
+      }
+      setRecording(false);
     };
 
     recognition.start();
@@ -33,27 +43,24 @@ export default function SpeechToTextRecorder() {
 
   const stopRecording = () => {
     recognitionRef.current?.stop();
-    setRecording(false);
-
-    // Instead of sending to API, you could integrate this with the chat context
-    // For now, we'll just log the transcript
-    if (transcript.trim()) {
-      console.log('Speech transcript:', transcript);
-      // You could emit a custom event or use a callback prop to send this to the chat
-    }
+    // Don't clear transcript here
   };
 
   return (
-    <div style={{ textAlign: "center", padding: "20px" }}>
-      <h2>🎙 Speech to Text</h2>
-      {!recording ? (
-        <button onClick={startRecording}>Start Talking</button>
+    <button
+      onClick={recording ? stopRecording : startRecording}
+      className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+        recording 
+          ? 'bg-red-500 hover:bg-red-600' 
+          : 'border border-gray-300 hover:border-gray-400'
+      }`}
+      title={recording ? "Stop recording" : "Start recording"}
+    >
+      {recording ? (
+        <MicOff className="w-5 h-5 text-white" />
       ) : (
-        <button onClick={stopRecording}>Stop</button>
+        <Mic className="w-5 h-5 text-gray-500" />
       )}
-      <div style={{ marginTop: "20px" }}>
-        <p>📝 {transcript}</p>
-      </div>
-    </div>
+    </button>
   );
 }

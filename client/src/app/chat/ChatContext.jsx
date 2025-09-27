@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { v4 as uuidv4 } from "uuid";
+import { useRouter } from 'next/navigation';
 
 const ChatContext = createContext();
 
@@ -18,8 +19,21 @@ const STORAGE_KEYS = {
     SUMMARY: 'chat_summary'
 };
 
-// localStorage utility functions
+// Initialize user_data as null
+let user_data = null;
+
+// Move localStorage operations into an object that checks for browser environment
 const localStorageUtils = {
+    isClient: typeof window !== 'undefined',
+    
+    // Initialize user data
+    initUserData() {
+        if (this.isClient) {
+            user_data = localStorage.getItem('credentials') || "No user context available";
+        }
+        return user_data;
+    },
+
     // Get all conversations
     getConversations() {
         try {
@@ -176,9 +190,9 @@ const localStorageUtils = {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ 
-                    prompt: userMessage, 
-                    previous_summary: previousSummary, 
-                    user_context: userContext 
+                    prompt:  userMessage, 
+                    previous_summary: userContext.summary , 
+                    user_context: user_data 
                 })
             });
 
@@ -255,6 +269,17 @@ const localStorageUtils = {
 };
 
 export const ChatProvider = ({ children }) => {
+    const router = useRouter();
+    
+    // Add authentication check
+    useEffect(() => {
+        const isAuthenticated = document.cookie.includes('isAuthenticated=true');
+        if (!isAuthenticated) {
+            router.push('/');
+            return;
+        }
+    }, [router]);
+
     const [conversations, setConversations] = useState([]);
     const [currentChatId, setCurrentChatId] = useState(null);
     const [messages, setMessages] = useState([]);

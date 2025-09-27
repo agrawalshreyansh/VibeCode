@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, Settings, CheckCircle, Headphones, Download, Mic, Image, Paperclip, Smile, Search, Plus, Trash2 } from 'lucide-react'; 
 import { useChat } from './ChatContext'; // Import the context hook
 import SettingsModal from '@/components/SettingsModal'; // Import settings modal
+import SpeechToTextRecorder from '@/components/audiorecorder';
 
 // --- Custom Dynamic Content Components (Keep these for visual fidelity) ---
 // (Omitted for brevity, assume EmotionScoreGraph and AudioMessage are defined here or imported)
@@ -73,6 +74,8 @@ export default function ChatSection() {
     
     const [inputText, setInputText] = useState('');
     const [showSettings, setShowSettings] = useState(false);
+    const [recording, setRecording] = useState(false);
+    const [currentTranscript, setCurrentTranscript] = useState("");
     const messagesEndRef = useRef(null);
 
     const currentChat = conversations.find(c => c.id === currentChatId);
@@ -90,6 +93,20 @@ export default function ChatSection() {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
             handleSend();
+        }
+    };
+
+    const handleTranscriptComplete = (transcript) => {
+        setInputText(transcript); // Set input text to transcript
+        setCurrentTranscript(""); // Clear current transcript only after it's in input
+    };
+
+    const handleTranscriptChange = (text, isRecording) => {
+        setCurrentTranscript(text);
+        setRecording(isRecording);
+        // Update input text in real-time while recording
+        if (isRecording) {
+          setInputText(text);
         }
     };
 
@@ -249,14 +266,14 @@ export default function ChatSection() {
                                         <div className="flex items-center mb-1">
                                             <span className="font-medium text-amber-800">MoodMate</span>
                                         </div>
-                                        <p className="text-gray-500 italic flex items-center">
+                                        <div className="text-gray-500 italic flex items-center">
                                             <span className="flex space-x-1 mr-2">
                                                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                                                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
                                                 <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
                                             </span>
                                             {apiStatus === 'online' ? 'Thinking...' : 'Trying to connect...'}
-                                        </p>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -269,7 +286,7 @@ export default function ChatSection() {
                     )}
                 </div>
 
-                {/* Input Area */}
+                {/* Update Input Area */}
                 <div className="p-4 bg-white border-t border-gray-200 flex flex-col">
                     <div className="flex items-center space-x-4 mb-3 text-gray-500">
                         <Smile className="w-5 h-5 cursor-pointer hover:text-gray-700" />
@@ -277,7 +294,10 @@ export default function ChatSection() {
                         <Paperclip className="w-5 h-5 cursor-pointer hover:text-gray-700" />
                     </div>
                     <div className="flex items-center space-x-3">
-                        <Mic className="w-6 h-6 text-gray-500 cursor-pointer hover:text-gray-700 p-1 rounded-full border border-gray-300"/>
+                        <SpeechToTextRecorder 
+                          onTranscriptComplete={handleTranscriptComplete}
+                          onTranscriptChange={handleTranscriptChange}
+                        />
                         <textarea
                           value={inputText}
                           onChange={(e) => setInputText(e.target.value)}
