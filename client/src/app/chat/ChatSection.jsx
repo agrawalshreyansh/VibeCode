@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Send, Settings, CheckCircle, Headphones, Download, Mic, Image, Paperclip, Smile, Search, Plus, Trash2 } from 'lucide-react'; 
 import { useChat } from './ChatContext'; // Import the context hook
+import SettingsModal from '@/components/SettingsModal'; // Import settings modal
 
 // --- Custom Dynamic Content Components (Keep these for visual fidelity) ---
 // (Omitted for brevity, assume EmotionScoreGraph and AudioMessage are defined here or imported)
@@ -60,13 +61,18 @@ export default function ChatSection() {
         currentChatId, 
         messages, 
         isLoading, 
+        apiStatus,
         switchChat, 
         sendNewMessage, 
         startNewChat, 
-        deleteChat 
+        deleteChat,
+        updateChatTitle,
+        retryMessage,
+        checkApiStatus
     } = useChat();
     
     const [inputText, setInputText] = useState('');
+    const [showSettings, setShowSettings] = useState(false);
     const messagesEndRef = useRef(null);
 
     const currentChat = conversations.find(c => c.id === currentChatId);
@@ -88,28 +94,40 @@ export default function ChatSection() {
     };
 
     // Helper to render message content (kept from previous code)
-    const renderMessageContent = (msg) => {
+    const renderMessageContent = (msg, index) => {
         if (msg.sender === 'dynamic') {
             if (msg.content === 'graph') return <EmotionScoreGraph />;
             if (msg.content === 'audio') return <AudioMessage />;
         }
         
         const isUser = msg.sender === 'user';
+        const isOfflineResponse = msg.isOffline;
         const bubbleClasses = `max-w-xl p-3 rounded-2xl shadow-md ${
           isUser 
             ? 'bg-orange-600 text-white rounded-br-none'
-            : 'bg-white text-gray-800 rounded-tl-none border border-gray-200'
+            : `${isOfflineResponse ? 'bg-yellow-100 border border-yellow-300 text-yellow-800' : 'bg-white text-gray-800 border border-gray-200'} rounded-tl-none`
         }`;
         
         return (
             <div className={bubbleClasses}>
                 {!isUser && (
-                  <div className="flex items-center mb-1">
-                    <span className="font-medium text-amber-800">MoodMate</span>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className={`font-medium ${isOfflineResponse ? 'text-yellow-800' : 'text-amber-800'}`}>
+                        MoodMate {isOfflineResponse && '(Offline)'}
+                    </span>
+                    {isOfflineResponse && (
+                        <button 
+                            onClick={() => retryMessage(msg.id)}
+                            className="text-xs bg-yellow-200 hover:bg-yellow-300 px-2 py-1 rounded transition-colors"
+                            title="Retry with API"
+                        >
+                            Retry
+                        </button>
+                    )}
                   </div>
                 )}
                 <p className="whitespace-pre-line">{msg.content}</p>
-                <p className={`text-xs mt-1 ${isUser ? 'text-white/80' : 'text-gray-400'} text-right`}>
+                <p className={`text-xs mt-1 ${isUser ? 'text-white/80' : isOfflineResponse ? 'text-yellow-600' : 'text-gray-400'} text-right`}>
                   {new Date(msg.timestamp).toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'})}
                 </p>
             </div>
@@ -160,9 +178,30 @@ export default function ChatSection() {
                         <img src="/placeholder-avatar.png" alt="User" className="w-10 h-10 rounded-full border border-gray-300" />
                         <div>
                             <h2 className="font-semibold text-gray-800">{currentChat?.title || 'Welcome to MoodMate'}</h2>
-                            <p className="text-xs text-gray-500">
-                                {currentChatId ? `${messages.length} messages` : 'Select or start a chat'}
-                            </p>
+                            <div className="flex items-center space-x-2">
+                                <p className="text-xs text-gray-500">
+                                    {currentChatId ? `${messages.length} messages` : 'Select or start a chat'}
+                                </p>
+                                {/* API Status Indicator */}
+                                <div className="flex items-center space-x-1">
+                                    <div className={`w-2 h-2 rounded-full ${
+                                        apiStatus === 'online' ? 'bg-green-500' : 
+                                        apiStatus === 'offline' ? 'bg-red-500' : 'bg-yellow-500'
+                                    }`}></div>
+                                    <span className="text-xs text-gray-400">
+                                        {apiStatus === 'online' ? 'API Online' : 
+                                         apiStatus === 'offline' ? 'API Offline' : 'Checking...'}
+                                    </span>
+                                    {apiStatus === 'offline' && (
+                                        <button 
+                                            onClick={checkApiStatus}
+                                            className="text-xs text-blue-500 hover:text-blue-700 underline ml-1"
+                                        >
+                                            Retry
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                     {/* Trash Button for Active Chat */}
@@ -171,7 +210,11 @@ export default function ChatSection() {
                             <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600">
                                 <Headphones className="w-5 h-5"/>
                             </button>
-                            <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600">
+                            <button 
+                                className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600"
+                                onClick={() => setShowSettings(true)}
+                                title="Settings"
+                            >
                                 <Settings className="w-5 h-5"/>
                             </button>
                             <button 
@@ -197,15 +240,24 @@ export default function ChatSection() {
                             </div>
                             {messages.map((msg, idx) => (
                                 <div key={idx} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                                    {renderMessageContent(msg)}
+                                    {renderMessageContent(msg, idx)}
                                 </div>
                             ))}
                             {isLoading && (
                                 <div className="flex justify-start">
-                                    <p className="text-gray-500 italic flex items-center">
-                                        MoodMate is thinking... 
-                                        <span className="ml-2 animate-pulse text-xl">. . .</span>
-                                    </p>
+                                    <div className="bg-white border border-gray-200 rounded-tl-none rounded-2xl p-3 max-w-xl shadow-md">
+                                        <div className="flex items-center mb-1">
+                                            <span className="font-medium text-amber-800">MoodMate</span>
+                                        </div>
+                                        <p className="text-gray-500 italic flex items-center">
+                                            <span className="flex space-x-1 mr-2">
+                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
+                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.1s'}}></div>
+                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{animationDelay: '0.2s'}}></div>
+                                            </span>
+                                            {apiStatus === 'online' ? 'Thinking...' : 'Trying to connect...'}
+                                        </p>
+                                    </div>
                                 </div>
                             )}
                             <div ref={messagesEndRef}/>
@@ -244,6 +296,12 @@ export default function ChatSection() {
                     </div>
                 </div>
             </div>
+            
+            {/* Settings Modal */}
+            <SettingsModal 
+                isOpen={showSettings} 
+                onClose={() => setShowSettings(false)} 
+            />
         </div>
     );
 }
