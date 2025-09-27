@@ -1,6 +1,7 @@
 import logging
 from pathlib import Path
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
 import requests
@@ -24,6 +25,15 @@ if not OPENROUTER_API_KEY:
     logger.warning("OPENROUTER_API_KEY not found; /send_prompt will return 500 until it is set.")
 
 app = FastAPI()
+
+# Enable CORS for all origins, methods, and headers
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # In-memory storage for conversation context
 conversation_context: Dict[str, Any] = {}
@@ -145,5 +155,9 @@ async def get_context():
     if not conversation_context:
         return {"message": "No context available yet."}
     return conversation_context
+
+@app.get("/health")
+async def health():
+    return {"status": "ok"}
 
 # Run using: uvicorn filename:app --reload
