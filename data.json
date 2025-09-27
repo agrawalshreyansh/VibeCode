@@ -1,0 +1,662 @@
+[
+  {
+    "input": "I have three exams next week and I haven't started studying. I feel like I'm drowning.",
+    "output": "**Drowning is exactly right; this is a genuinely overwhelming situation.** Your brain is panicking, so let's reset it. Try the **4-7-8 breathing technique** (inhale 4, hold 7, exhale 8) three times. Then, just for now, commit to **studying one subject for 15 minutes**—that’s it."
+  },
+  {
+    "input": "My roommate and I had a huge fight and now it's so awkward. I don't know how to fix this.",
+    "output": "**That tension is heavy and makes your living space feel awful.** It's okay that it's awkward, but avoiding it won't work. **Take 5 slow, deep breaths** and remind yourself that repair is possible. When you're ready, **send a short text suggesting a calm, five-minute chat** later today."
+  },
+  {
+    "input": "I feel like everyone else has their life figured out and I'm just falling behind.",
+    "output": "**Stop comparing your raw, messy life to their filtered highlight reel—it's a fake competition.** You're exactly where you need to be. Place a hand on your heart and **breathe slowly to feel grounded.** Write down **one non-academic win you had today** (e.g., drank water, made your bed)."
+  },
+  {
+    "input": "I can't sleep because I keep thinking about all the things I need to do tomorrow.",
+    "output": "**That’s the stress cycle—your brain is trying to 'help' at the worst time.** Tell your mind you hear it. **Try progressive muscle relaxation** starting with your toes and working up. Then, **jot down your top 3 tasks for tomorrow** on a notepad and tell your brain the list is safe for the night."
+  },
+  {
+    "input": "I got a bad grade on my midterm and I feel like a complete failure.",
+    "output": "**That grade hurts, and the disappointment is completely valid, but one test doesn't define your entire future.** You're not a failure, you're a person who got a tough result. Take **five slow, deep breaths** and remind yourself: *this is data, not a destiny*. **Schedule an office hours visit this week** to discuss how to improve on the next one."
+  },
+  {
+    "input": "I'm homesick and miss my family so much. College doesn't feel like home.",
+    "output": "**Homesickness is real pain, and it proves you have a beautiful connection to the people you miss.** That's a strength, not a weakness. **Take 10 minutes to walk outside** and focus only on the sounds you hear. **Call a loved one** *during* that walk to bridge the distance."
+  },
+  {
+    "input": "I have social anxiety and making friends in college feels impossible.",
+    "output": "**Social anxiety is a brutal liar that tells you everyone is judging you—they're not.** You're strong for wanting connection. **Do 4-4-4 box breathing** to calm your nervous system. Then, **join one low-stakes group activity** based purely on a hobby (like a book club or a craft session)."
+  },
+  {
+    "input": "I feel overwhelmed by all the career pressure and don't know what I want to do with my life.",
+    "output": "**The pressure to have a perfect 'plan' is suffocating and entirely unrealistic for most people.** You're growing, not failing. **Try the 4-7-8 breathing** to calm the frantic energy. **Send one short email to a professor** you like, asking them about *their* career path."
+  },
+  {
+    "input": "I procrastinate everything and then hate myself for it. I can't seem to break the cycle.",
+    "output": "**The self-hatred is what fuels the next round of procrastination, so cut yourself a break.** Your brain is avoiding perceived difficulty. Place your hand on your heart and **offer yourself some genuine self-compassion.** Then, use the **2-minute rule:** if it takes less, do it now."
+  },
+  {
+    "input": "I feel like I don't belong here. Everyone seems so much smarter than me.",
+    "output": "**That’s Imposter Syndrome talking—it’s extremely common, especially here, and it's a lie.** You earned your spot. **Ground yourself by naming 3 objects you can see** right now. **Write down one specific example** of a challenge you’ve overcome since starting college."
+  },
+  {
+    "input": "I'm dealing with a breakup and can't focus on anything else.",
+    "output": "**Heartbreak is a literal wound, and it will hijack your focus.** It’s okay that you're distracted. **Do 5 minutes of gentle stretching or yoga** to move the emotion through your body. **Commit to eating one full, balanced meal** at a set time today."
+  },
+  {
+    "input": "I have a presentation tomorrow and I'm terrified of public speaking.",
+    "output": "**That fear is very common and it proves you care about doing well.** Your nervousness is not a prophecy of failure. **Practice 4-4-4 breathing** for one minute. **Drill your first three lines** until they feel automatic—a strong start makes all the difference."
+  },
+  {
+    "input": "I feel lonely even when I'm surrounded by people in my dorm.",
+    "output": "**Loneliness in a crowd is one of the toughest, most isolating feelings—it means you crave connection, not just company.** Acknowledge the feeling with a **slow, comforting breath.** **Reach out to one person** (anyone) and ask them: 'How are you *really* doing?'"
+  },
+  {
+    "input": "I'm a perfectionist and every small mistake feels like the end of the world.",
+    "output": "**Perfectionism is a prison; it stops you from living and submitting things.** Your worth is not tied to flawlessness. When you notice a judgmental thought, try the **S.T.O.P. technique** (Stop, Take a breath, Observe, Proceed with compassion). **Intentionally use a pen color you dislike** for your notes today to practice tolerating imperfection."
+  },
+  {
+    "input": "I can't concentrate in class and my mind keeps wandering.",
+    "output": "**Your brain is tired or stressed, so it’s naturally drifting.** This happens to almost everyone. Before your next class, **do 5-5-5 breathing** (in 5, hold 5, out 5). In class, when your mind wanders, **simply note 'thinking' and gently return to the lecture.**"
+  },
+  {
+    "input": "I'm eating too much junk food and skipping meals when I'm stressed.",
+    "output": "**Stress messes with your eating, period.** This is your body coping poorly, not a moral failing. **Take three mindful breaths** *before* your next meal or snack. **Buy one easy, healthy snack** (like an apple or nuts) and keep it on your desk."
+  },
+  {
+    "input": "I'm constantly comparing myself to others on social media.",
+    "output": "**Social media is literally designed to make you feel bad about yourself—the comparison is a deliberate trap.** Stop falling for it. **Take three deep breaths** and set a **one-minute timer** before opening any app. **Do a 'digital sunset'** and put your phone away one hour before bed."
+  },
+  {
+    "input": "I feel guilty for struggling when I know others have it worse.",
+    "output": "**Your pain is valid, full stop. Suffering is not a competition, and minimizing your feelings doesn't help anyone.** You're struggling, and that's enough. Place your hands over your heart and **remind yourself that you deserve support too.** **Write down one emotion you are feeling** without judging it."
+  },
+  {
+    "input": "I'm working part-time and going to school and I'm exhausted all the time.",
+    "output": "**You are carrying a massive load; exhaustion is a logical consequence, not a sign of weakness.** You need real rest. **Use the physiological sigh** (deep breath in, a second small sip of air, long exhale). **Schedule a non-negotiable, 15-minute, screen-free rest** period today."
+  },
+  {
+    "input": "I feel like I'm disappointing everyone—my parents, professors, myself.",
+    "output": "**You feel like a failure, but you are not. This feeling says more about your incredibly caring nature than your performance.** You are worthy as you are. Place both hands on your chest and **breathe slowly, affirming your inherent worth.** **Write down one thing you did today** that aligned with *your* values."
+  },
+  {
+    "input": "I'm having panic attacks before tests and can't think clearly.",
+    "output": "**Panic is terrifying; your nervous system is on fire and trying to protect you.** It needs a hard reset. When it happens, **immediately use the 5-4-3-2-1 grounding technique.** Before your next test, **do 4-4-4-4 box breathing** until your heart rate slows."
+  },
+  {
+    "input": "I don't feel like I'm learning anything meaningful, just memorizing for tests.",
+    "output": "**That feeling of 'memorizing to forget' is discouraging and a sign you want deeper meaning.** That's a good impulse. **Take a deep breath** and let go of the pressure to perform. **Try connecting one concept you're studying** to something personal you genuinely care about."
+  },
+  {
+    "input": "My mental health is affecting my relationships and I feel guilty about it.",
+    "output": "**It takes real courage and self-awareness to admit this—your guilt shows how much you care.** You are not a burden. **Breathe deeply and practice self-compassion** as you would for a struggling friend. **Talk honestly with one close person** about what you need and what support looks like."
+  },
+  {
+    "input": "I'm a first-generation college student and everything feels foreign to me.",
+    "output": "**You are a pioneer for your family, which is incredibly brave, even if it feels overwhelming and strange.** Your unfamiliarity is valid. **Take three grounding breaths** and affirm that you belong here. **Seek out your school's first-generation student group** for advice and support."
+  },
+  {
+    "input": "I keep getting distracted by my phone and scrolling instead of studying.",
+    "output": "**Your phone is a tiny slot machine, and your brain is chasing the quick reward, avoiding the hard work.** You have to make the hard choice easier. **Before studying, put your phone in another room** or on a high shelf. **Use the Pomodoro Technique:** 25 mins focus, 5 mins *screen-on* break."
+  },
+  {
+    "input": "I'm struggling with my sexuality and identity in college.",
+    "output": "**This is a brave and deeply personal journey, and there is no rushed timeline for figuring it out.** Your feelings are valid. **Breathe in through your nose and slowly out through your mouth.** **Look into LGBTQ+ resources on campus**—a supportive community is invaluable right now."
+  },
+  {
+    "input": "I feel behind because I changed my major and everyone else seems to know what they're doing.",
+    "output": "**Changing majors is a sign of courage and self-awareness, not failure.** Your path is yours alone, and growth isn't a straight line. **Acknowledge the brave choice you made** with a deep breath. **Focus on one thing in your new major** that you genuinely enjoy learning."
+  },
+  {
+    "input": "I have impostor syndrome and feel like I'll be found out as not smart enough.",
+    "output": "**Imposter syndrome is a complete lie—the fact that you're here and working is the only evidence you need.** Challenge those thoughts. **Pause and take five slow breaths.** **Write down one piece of positive, specific feedback** you’ve received recently and keep it in your wallet."
+  },
+  {
+    "input": "I'm overwhelmed by all the opportunities and don't know what to choose.",
+    "output": "**Decision fatigue is real, but having options is ultimately a privilege, even if it feels like chaos now.** Breathe slowly and center yourself. **Use the 10-10-10 rule:** How will you feel about this choice in 10 minutes, 10 months, and 10 years? **Choose one option** and commit to it for a trial period."
+  },
+  {
+    "input": "I'm dealing with family problems from home while trying to focus on school.",
+    "output": "**Carrying heavy family worries while trying to perform academically is incredibly taxing and challenging.** Your focus is split. **Do 1 minute of deep, calming breaths** to support your nervous system. **Set a clear, short boundary** (e.g., 'I will check in at 7 PM and not before') to separate your worlds."
+  },
+  {
+    "input": "I feel like I'm wasting my parents' money and letting them down.",
+    "output": "**That financial pressure is crushing, and it comes from a place of genuine care—but you are not a stock investment.** You are a human being. **Breathe deeply and remind yourself that education is a marathon of growth.** **Write a short list of non-monetary things** you are learning (e.g., discipline, independence)."
+  },
+  {
+    "input": "I can't seem to make close friends and feel isolated.",
+    "output": "**Feeling isolated is terrible, and building deep connection takes a lot of time and vulnerability.** Don't panic. **Take three deep breaths** and remind yourself that quality is better than quantity. **Initiate one genuine, vulnerable conversation this week** with an acquaintance."
+  },
+  {
+    "input": "I'm afraid I'm not good enough for my dream career.",
+    "output": "**Fear shows you care deeply, and self-doubt is part of aiming high.** Don't let the fear paralyze you. **Take a moment to connect with *why* you love this career.** **Identify one small skill** (e.g., a software feature) related to your dream and focus on mastering just that this week."
+  },
+  {
+    "input": "I feel pressure to be social and outgoing but I'm naturally introverted.",
+    "output": "**There is absolutely nothing wrong with being introverted—it’s a strength, not a problem to fix.** You need quiet. **Schedule 30 minutes of intentional, solitary downtime** to recharge today. **Focus on finding one-on-one time** with an acquaintance instead of large groups."
+  },
+  {
+    "input": "I'm struggling with time management and everything feels chaotic.",
+    "output": "**Time management is a skill you learn, not an innate trait—it's normal to struggle when juggling so much.** Stop feeling guilty. **Take a few centering breaths** and focus only on tomorrow. **Try time-blocking:** assign specific tasks to specific hours in your calendar."
+  },
+  {
+    "input": "I feel like college is supposed to be the best years of my life but I'm not enjoying it.",
+    "output": "**That 'best years' pressure is toxic and unrealistic—it makes normal struggles feel like personal failures.** It's okay if it's just *a* year. **Take some slow, grounding breaths** and release the expectation. **Identify one tiny thing** that brings you peace or satisfaction today."
+  },
+  {
+    "input": "I'm having trouble sleeping and it's affecting everything else.",
+    "output": "**Sleep issues cascade into every part of your life—it’s not your fault, you need real help.** **Try the 4-7-8 breathing** 5 times before you get out of bed. **Create a non-negotiable, 30-minute 'digital sunset'** *before* bed: no screens, dim lights."
+  },
+  {
+    "input": "I don't know how to ask for help when I need it.",
+    "output": "**Asking for help is a true sign of strength, not weakness, even if it feels terrifying.** You deserve support. **Start small by identifying one single, specific area** where you need help. **Reach out to one trusted person** this week with a very specific request."
+  },
+  {
+    "input": "I feel like I'm not smart enough to be in my classes.",
+    "output": "**Your feelings of inadequacy are painful, but your admission and work are objective proof that you *are* smart enough.** Focus on growth. When self-doubt arises, **pause and take several slow breaths.** **Focus on asking one thoughtful question** in class this week."
+  },
+  {
+    "input": "My anxiety is making it hard to participate in class discussions.",
+    "output": "**That feeling of panic when you want to speak is common, but your voice is valuable.** The anxiety is lying to you. Before class, **do 4-4-4-4 box breathing** to settle your nerves. **Start with one tiny, non-verbal participation:** making eye contact or nodding your head."
+  },
+  {
+    "input": "I feel guilty for taking breaks when I have so much work to do.",
+    "output": "**You're mistaking rest for laziness. Breaks are mandatory for a productive, processing brain—they're part of the work.** Give yourself permission. **Take three deep breaths** and affirm that breaks are necessary. **Schedule a 15-minute, *guilt-free* break** for every hour of focused study."
+  },
+  {
+    "input": "I'm worried about student loans and debt after graduation.",
+    "output": "**That financial worry is heavy and completely understandable—it shows responsibility.** Knowledge helps reduce anxiety. **Breathe deeply and ground yourself in the present.** **Schedule a meeting with a financial aid counselor** to calmly discuss your options and a manageable plan."
+  },
+  {
+    "input": "I feel like everyone else is having more fun than me in college.",
+    "output": "**The 'fun' you see is the social media highlight reel, not the full reality—the comparison is unfair and exhausting.** Stop looking at other people's chapters. **Take a moment to breathe** and focus on your path. **Try one activity this week** that genuinely interests *you*, not what you think you should be doing."
+  },
+  {
+    "input": "I'm having trouble connecting with my professors and feel like just a number.",
+    "output": "**Feeling anonymous in a big school is discouraging; you want real mentorship, which is a great desire.** Most professors want to connect. **Take a deep breath** and acknowledge their humanity. **Visit one professor's office hours this week** just to introduce yourself and express genuine interest in the subject."
+  },
+  {
+    "input": "I'm struggling with perfectionism and it's paralyzing me.",
+    "output": "**Perfectionism is a prison; it stops you from living and submitting things.** You need to move. **Pause and take five deep breaths** when the thoughts appear. **Aim for 80%** on your next assignment—practice the 'good enough' approach."
+  },
+  {
+    "input": "I don't feel like I fit in with any social groups on campus.",
+    "output": "**Feeling like an outsider is isolating, but it's often a sign that you value authentic connection over superficial 'fitting in.'** Don't change who you are. **Take some grounding breaths** and remind yourself of this truth. **Look for activities based on *your* unique interests**, not popular campus groups."
+  },
+  {
+    "input": "I'm having family pressure to pursue a career I don't want.",
+    "output": "**The tension between pleasing family and being true to yourself is incredibly hard.** This conflict is real. **Take some time for deep, calming breaths** to center your thoughts. **Have an honest conversation with your family** about your interests *and* their underlying fears (e.g., financial stability)."
+  },
+  {
+    "input": "I feel behind everyone else academically and socially.",
+    "output": "**That feeling is a lie based on an arbitrary, made-up timeline.** You are on your own unique clock. **Take several slow, grounding breaths** to bring your focus back to the present. **Choose one small area of growth this week** (academic or social) and focus *only* on that."
+  },
+  {
+    "input": "I'm dealing with depression and it's hard to get motivated for anything.",
+    "output": "**Depression makes every tiny task feel like climbing a mountain—your lack of motivation is a symptom, not a failing.** Be kind to yourself. **Start with five minutes of gentle movement** (walking or stretching). **Set one extremely tiny goal for today** (e.g., drink a full glass of water). **Please reach out to campus counseling.**"
+  },
+  {
+    "input": "I'm overwhelmed by trying to maintain good grades while having a social life.",
+    "output": "**That balance is a tricky equation that looks different for everyone—you're being pulled in two necessary directions.** Both matter. **Take a few deep breaths** and accept that you can't be perfect at both simultaneously. **Time-block your schedule:** assign specific hours for studying AND specific hours for social time."
+  },
+  {
+    "input": "I feel like I made the wrong choice in my college major.",
+    "output": "**Major choice anxiety is completely normal and doesn't necessarily mean you're on the wrong path.** Stop panicking. **Take some deep breaths** and give yourself space to explore the doubt. **Ask yourself: what specifically about this choice feels wrong?**"
+  },
+  {
+    "input": "I'm having trouble adjusting to living away from home for the first time.",
+    "output": "**This is a massive transition—you're building a new life and it's hard, isolating work.** Your feelings are valid. **Create one small ritual** that makes your space feel cozy (e.g., a cup of tea, a specific photo). **Try one new campus activity this week** to build independence confidence."
+  },
+  {
+    "input": "I keep comparing my college experience to what I see on social media.",
+    "output": "**You're comparing your reality to a heavily curated, fake version of life—it’s a losing game.** Stop checking other people's scores. **Before scrolling, set a timer for 60 seconds** and stick to it. **Unfollow accounts** that consistently make you feel worse about yourself."
+  },
+  {
+    "input": "I'm worried about making career connections and networking feels overwhelming.",
+    "output": "**Networking feels gross when you think of it as using people; reframe it as relationship-building around shared interests.** It's less scary that way. **Take some calming breaths.** **Engage meaningfully with one professor** about their work, focusing on genuine curiosity."
+  },
+  {
+    "input": "I feel like I'm not getting the full college experience because I commute.",
+    "output": "**Your experience is different, but it's still valuable and yours.** Don't let a comparison steal your joy. **Take a moment to acknowledge the *benefits* of your situation** (e.g., familiar comfort). **Commit to staying on campus for one extra activity** each week to build more connection."
+  },
+  {
+    "input": "I'm struggling with eating disorders and body image issues.",
+    "output": "**These are serious issues that require professional care, and it is incredibly brave that you acknowledge them.** **When difficult thoughts arise, pause and take gentle breaths.** **Practice one small act of body kindness today,** like wearing comfortable clothing. **Please reach out to campus health or counseling services now.**"
+  },
+  {
+    "input": "I feel like I don't have enough extracurricular activities for my resume.",
+    "output": "**College is for learning and growing, not just building a perfect-looking resume for future employers.** Quality over quantity is key. **Take some deep breaths** and focus on your values. **Choose one activity you genuinely care about** and commit deeply to it, ignoring the pressure to do more."
+  },
+  {
+    "input": "I'm having trouble with group projects and working with classmates.",
+    "output": "**Group work is a common nightmare of communication styles and mismatched effort.** It’s okay to be frustrated. Before you respond to a conflict, **take a few deep breaths.** **Address the issue directly but kindly:** 'I've noticed we have different approaches. Can we talk about a clear strategy?'"
+  },
+  {
+    "input": "I feel like college is moving too fast and I can't keep up.",
+    "output": "**The pace is relentless, and the pressure to do everything is exhausting.** You're human, not a machine. **Take slow, intentional breaths** and focus only on the next hour. **Choose one important task** for the day and give it your full, non-rushed attention."
+  },
+  {
+    "input": "I'm struggling with substance use as a way to cope with stress.",
+    "output": "**Recognizing this pattern is a huge step—stress relief is necessary, but this method isn't sustainable or healthy.** You deserve better tools. **Acknowledge this truth with a deep breath.** **Try one alternative stress-relief technique this week** (e.g., exercise, journaling, calling a friend). **Please connect with campus counseling for support.**"
+  },
+  {
+    "input": "I don't know how to manage my time between classes, work, and personal life.",
+    "output": "**Juggling everything without a system creates unnecessary chaos and anxiety.** You need structure. **Take a moment for centering breaths.** **Use a simple calendar app to block out time** for classes, work, AND personal needs—treat them all as non-negotiable appointments."
+  },
+  {
+    "input": "I feel like I'm not making the most of my college opportunities.",
+    "output": "**The fear of missing out (FOMO) prevents you from appreciating what you *are* doing.** Stop obsessing over an imagined, perfect experience. **Take some grounding breaths** and reflect on one meaningful thing you’ve done recently. **Focus on depth, not breadth.**"
+  },
+  {
+    "input": "I feel overwhelmed with assignments and exams.",
+    "output": "**That heavy feeling is real.** Let's break it down. **Break your biggest task into three smaller chunks.** **Take a 5-minute walk** outside to clear your mind."
+  },
+  {
+    "input": "I am anxious about my upcoming presentation.",
+    "output": "**It’s normal to feel that gut-punch of anxiety.** **Practice deep breathing for 2 minutes** to calm your system. **Visualize yourself delivering the first two sentences confidently.**"
+  },
+  {
+    "input": "I feel lonely since I moved to college.",
+    "output": "**Loneliness is tough, and it hits hard in a new place.** **Reach out to one classmate** with a simple, direct question about class. **Take a short walk outside** to feel a shift in perspective."
+  },
+  {
+    "input": "I can't concentrate on studying.",
+    "output": "**Focus is a resource, and yours is depleted.** **Take a 5-minute break for mindful meditation** or listen to calming music. **Set a timer for 10 minutes** and commit to only focusing until it goes off."
+  },
+  {
+    "input": "I am stressed about balancing social life and studies.",
+    "output": "**The pressure to excel at both is exhausting.** **Schedule short, defined breaks for fun activities** like a quick walk or stretching. **Block out 3 hours tomorrow evening** to focus *only* on studying, guilt-free."
+  },
+  {
+    "input": "I feel sad and unmotivated.",
+    "output": "**It’s absolutely okay to feel down and unmotivated right now.** **Try journaling your thoughts for 5 minutes** to get them out of your head. **Do a short breathing exercise** to re-regulate your emotions."
+  },
+  {
+    "input": "I have panic attacks before exams.",
+    "output": "**That physical terror is your body going into overdrive.** **Practice slow, deep breaths** (slower exhale than inhale). **Focus on grounding yourself in the present moment** by noticing your feet on the floor."
+  },
+  {
+    "input": "I feel like I am not good enough.",
+    "output": "**That feeling is a liar that tries to undermine your efforts.** **Take a moment to list 3 things you successfully did today,** no matter how small. **Breathe deeply** to affirm your worth."
+  },
+  {
+    "input": "I keep procrastinating my work.",
+    "output": "**Procrastination happens, often because the task feels too big.** **Start with a 5-minute focused session** on the task. **Reward yourself** with a small break immediately after the 5 minutes."
+  },
+  {
+    "input": "I am nervous about making friends.",
+    "output": "**Meeting new people is a nerve-wracking process for most people.** **Try 5 deep breaths to calm your nerves.** **Smile and say \"hi\" to one person** you see in your immediate vicinity."
+  },
+  {
+    "input": "I feel anxious about my grades.",
+    "output": "**Grades bring a lot of unnecessary stress.** **Take 2-3 deep breaths** and remind yourself that consistent effort matters more than impossible perfection. **Review one set of class notes** for 10 minutes."
+  },
+  {
+    "input": "I am overwhelmed by too many responsibilities.",
+    "output": "**That sounds genuinely heavy. You’re carrying too much.** **Make a simple to-do list** with only the top three priorities. **Take a 5-minute stretch or short walk** to physically release some tension."
+  },
+  {
+    "input": "I am stressed about my internship application.",
+    "output": "**Applications are high-pressure situations.** **Take a 5-minute pause** and breathe deeply. **Review your resume calmly** and focus on one small section to refine."
+  },
+  {
+    "input": "I feel guilty for not attending social events.",
+    "output": "**It’s perfectly okay to prioritize your well-being and rest.** **Take a short walk** and remind yourself you are not obligated to say yes to everything. **Practice a calming breathing exercise** to center yourself."
+  },
+  {
+    "input": "I am anxious about speaking in class.",
+    "output": "**Speaking up is nerve-wracking, especially in front of peers.** **Try a few deep breaths before you speak.** **Focus on preparing and delivering one clear sentence** as your entire goal."
+  },
+  {
+    "input": "I feel exhausted all the time.",
+    "output": "**Fatigue is brutal and means you need proper rest, not just sleep.** **Take short, mandatory breaks,** hydrate, and try a **2-minute mindfulness exercise** to check in with your body."
+  },
+  {
+    "input": "I am stressed about family expectations.",
+    "output": "**Family pressure is a real and difficult weight to carry.** **Take a moment to breathe deeply** and acknowledge your own needs. **Do a short grounding exercise** to focus on your own stability."
+  },
+  {
+    "input": "I feel unmotivated to attend lectures.",
+    "output": "**It’s normal to feel burnt out on continuous learning.** **Stand up, stretch, or take a 5-minute walk** before the lecture starts. **Set one small intention** for what you want to learn in that class."
+  },
+  {
+    "input": "I can't sleep at night due to stress.",
+    "output": "**Your mind is running a marathon when it should be resting.** **Try the 4-7-8 deep breathing** or a short, unguided meditation before bed. **Keep a notebook by your bed** to dump worried thoughts."
+  },
+  {
+    "input": "I am worried about my future career.",
+    "output": "**Future worries are common and can feel paralyzing.** **Take 5 minutes to jot down one tiny, achievable goal** related to your career exploration. **Breathe deeply** and focus on the present step."
+  },
+  {
+    "input": "I feel anxious talking to my professor.",
+    "output": "**It can be intimidating, but they are there to help.** **Take a few deep breaths before speaking.** **Prepare one simple, clear question** to start the conversation."
+  },
+  {
+    "input": "I am stressed about exams next week.",
+    "output": "**The upcoming deadlines are overwhelming you.** **Break your study time into 25-minute Pomodoro sessions.** **Take 5-minute walking breaks** after each session to move your body."
+  },
+  {
+    "input": "I feel disconnected from friends.",
+    "output": "**Friendship gaps are hard and isolating.** **Send a message to one friend** you miss right now. **Take a short walk** to clear your head and shift your mood."
+  },
+  {
+    "input": "I feel nervous during group discussions.",
+    "output": "**Discussion nerves are common—it’s okay to need a moment.** **Take deep breaths** and focus on actively listening to others before you speak. **Set a goal to contribute one thought.**"
+  },
+  {
+    "input": "I feel stressed about personal relationships.",
+    "output": "**Relationship stress is heavy and takes up mental energy.** **Try a 5-minute breathing or grounding exercise** to focus on your own stability first. **Focus on one thing** you can control in the situation."
+  },
+  {
+    "input": "I feel hopeless about my workload.",
+    "output": "**The heavy feeling of overwhelm is understandable.** **Focus on completing one very small, immediate task** right now. **Take a short walk** as a reward for that tiny win."
+  },
+  {
+    "input": "I feel anxious about deadlines.",
+    "output": "**Deadlines create intense pressure.** **Break the task into tiny, manageable steps** and list them out. **Do a 2-minute mindfulness pause** before you start working on the next step."
+  },
+  {
+    "input": "I feel burnt out from continuous studying.",
+    "output": "**Burnout is a serious signal that your system needs rest.** **Step outside for a short walk** to change your environment. **Do a brief stretching exercise** to release physical tension."
+  },
+  {
+    "input": "I can't manage time properly.",
+    "output": "**Time management is a skill, and you’re still learning it.** **Make a simple, realistic schedule** for the next 24 hours. **Take 5-minute breathing breaks** every hour to reset your focus."
+  },
+  {
+    "input": "I feel worried about failing a subject.",
+    "output": "**Fear of failure is a very normal, heavy feeling.** **Take a moment to breathe deeply** and focus on what you can actually control (your next study session). **Review one lecture slide.**"
+  },
+  {
+    "input": "I feel socially awkward at college.",
+    "output": "**Social awkwardness is extremely common—you're not alone in feeling this.** **Start small with simple greetings** to people you see. **Take a calming walk** to regulate your nerves beforehand."
+  },
+  {
+    "input": "I feel anxious about interviews.",
+    "output": "**Interviews are designed to be stressful.** **Try 5 slow, deep breaths** to calm your mind. **Prepare 2-3 key points** about yourself that you want to share."
+  },
+  {
+    "input": "I feel sad about being away from family.",
+    "output": "**Homesickness is normal and shows how much you love your family.** **Call a loved one** for a short, genuine chat. **Take a short walk** to lift your mood."
+  },
+  {
+    "input": "I feel nervous meeting new people.",
+    "output": "**It’s hard to put yourself out there.** **Take deep breaths** and remind yourself the other person is probably nervous too. **Start with a simple, genuine hello** and a quick compliment."
+  },
+  {
+    "input": "I feel pressured to excel in everything.",
+    "output": "**Pressure like that is unrealistic and paralyzing.** **Pause, breathe,** and remind yourself to be a little less critical. **Focus on completing one small task at a time** to build momentum."
+  },
+  {
+    "input": "I feel anxious about social media.",
+    "output": "**Social comparison is a thief of joy.** **Take a short break from screens** and focus on the real world around you. **Breathe deeply** and affirm your own worth."
+  },
+  {
+    "input": "I feel lonely even in a crowd.",
+    "output": "**Loneliness in a crowded space is a valid, isolating feeling.** **Try journaling your feelings** for 5 minutes. **Step outside for fresh air** and a change of scenery."
+  },
+  {
+    "input": "I can't focus due to constant worrying.",
+    "output": "**Worrying hijacks your attention.** **Do a 2-minute breathing exercise** to physically reset your mind and attention. **Write down your top worry** to get it out of your head."
+  },
+  {
+    "input": "I feel anxious before sleeping.",
+    "output": "**Sleep anxiety is common and frustrating.** **Try a short guided meditation** or deep breathing exercises before bed. **Read a physical book** for 10 minutes."
+  },
+  {
+    "input": "I feel stressed about my grades affecting my future.",
+    "output": "**It’s a valid worry, but your grades are not the only measure of your future.** **Take 5 deep breaths** to center yourself. **Plan one small step forward** related to your studies or career exploration."
+  },
+  {
+    "input": "I feel unmotivated to do assignments.",
+    "output": "**Motivation is fleeting—you need discipline.** **Start with a 5-minute session** on the assignment. **Reward yourself with a break** after those 5 minutes are up."
+  },
+  {
+    "input": "I feel overwhelmed by group projects.",
+    "output": "**Group work is a huge stressor that requires communication.** **Take a short walk** to reset your focus. **Concentrate only on your specific role** for now."
+  },
+  {
+    "input": "I feel anxious talking to strangers.",
+    "output": "**It’s natural to feel intimidated by new people.** **Take deep breaths** to calm your nerves. **Start with a simple, brief greeting** and see what happens."
+  },
+  {
+    "input": "I feel sad about personal failures.",
+    "output": "**Setbacks are part of life, and it's okay to feel sad about them.** **Write down one thing you successfully did well today.** **Breathe deeply** and practice self-compassion."
+  },
+  {
+    "input": "I feel anxious about upcoming exams.",
+    "output": "**Exam stress is intense and real.** **Take 5 deep breaths** to center yourself. **Review your notes in small, 15-minute chunks** instead of trying to do a huge session."
+  },
+  {
+    "input": "I feel burnt out with college workload.",
+    "output": "**Burnout is a sign you need to slow down and rest.** **Step outside, stretch,** and do a short mindfulness exercise. **Cancel one non-essential commitment** this week."
+  },
+  {
+    "input": "I feel nervous about public speaking.",
+    "output": "**Public speaking anxiety is a universal fear.** **Take deep breaths** and remind yourself your audience wants you to succeed. **Focus on delivering your first sentence** clearly."
+  },
+  {
+    "input": "I feel sad about losing touch with friends.",
+    "output": "**Friendship gaps are a natural but difficult part of life transitions.** **Reach out gently to one person** you miss. **Call someone you trust** to talk it through."
+  },
+  {
+    "input": "I feel stressed juggling college and part-time work.",
+    "output": "**Juggling those responsibilities is incredibly taxing.** **Prioritize your most important tasks** for tomorrow. **Take short 5-minute breaks** to reset your mind throughout the day."
+  },
+  {
+    "input": "I feel anxious about social events.",
+    "output": "**Social anxiety is normal and valid.** **Take deep breaths** and give yourself permission to leave early if needed. **Start by interacting with one person** at a time."
+  },
+  {
+    "input": "I feel unmotivated after failing an assignment.",
+    "output": "**It’s a setback, but it’s not the end of your story.** **Take a short walk** to process the feeling. **Reflect on one small thing** that could be improved next time."
+  },
+  {
+    "input": "I feel overwhelmed by continuous lectures.",
+    "output": "**Sitting and absorbing information all day is tiring.** **Take a short break** between sessions to move your body. **Do a 2-minute stretching exercise** to release tension."
+  },
+  {
+    "input": "I feel anxious about career choices.",
+    "output": "**Deciding on a career is a major source of stress.** **Take 5 minutes to journal your thoughts** about your values. **Do a calming breathing exercise** to center yourself."
+  },
+  {
+    "input": "I feel sad about being away from friends and family.",
+    "output": "**Distance is tough, and missing them is normal.** **Call or message someone close** to you. **Take a short mindful walk** outside to lift your spirits."
+  },
+  {
+    "input": "I feel nervous during exams.",
+    "output": "**Exam nerves are a physical and mental challenge.** **Take a few deep breaths** before you start. **Focus on one question at a time** and ignore the clock for a minute."
+  },
+  {
+    "input": "I feel stressed about deadlines piling up.",
+    "output": "**Deadlines create a feeling of being suffocated.** **Break your work into small, actionable tasks** right now. **Take short walking breaks** after each completed task."
+  },
+  {
+    "input": "I feel anxious when I have too many tasks.",
+    "output": "**A high volume of tasks can feel overwhelming.** **Prioritize the single most urgent task** and ignore the rest for now. **Take 2 deep, slow breaths.**"
+  },
+  {
+    "input": "I feel unmotivated to join college activities.",
+    "output": "**It's okay to need rest and quiet time.** **Take a short walk or stretch** to refresh your mind. **Say no to one commitment** to free up your schedule."
+  },
+  {
+    "input": "I feel anxious talking to teachers.",
+    "output": "**It's nerve-wracking to talk to authority figures.** **Take a deep breath** and remember they are just people. **Prepare one simple question** to ask them."
+  },
+  {
+    "input": "I feel sad about not making friends quickly.",
+    "output": "**Friendships take time, and the pressure to have them immediately is false.** **Take a short walk** and remind yourself to be patient. **Approach one person** and start a genuine conversation."
+  },
+  {
+    "input": "I feel stressed balancing studies and hobbies.",
+    "output": "**Balance is an active process, not a static state.** **Schedule 10 minutes for your hobby** as a non-negotiable break. **Breathe deeply** and allow yourself to enjoy it."
+  },
+  {
+    "input": "I feel anxious about group presentations.",
+    "output": "**Group presentations multiply the stress.** **Take a short 5-minute breathing break** before you start. **Focus on supporting your teammates** as much as your own part."
+  },
+  {
+    "input": "I feel unmotivated after a bad grade.",
+    "output": "**A bad grade is a setback, not a final verdict on your ability.** **Take a short walk** to clear your head. **Practice deep breathing** to reset your mindset."
+  },
+  {
+    "input": "I feel lonely in a new city.",
+    "output": "**Moving and feeling alone is one of the hardest adjustments.** **Try reaching out to one classmate** with a friendly message. **Take a brief walk outside** to feel a part of the city."
+  },
+  {
+    "input": "I feel nervous before sports competitions.",
+    "output": "**Competition nerves are normal and a sign you care.** **Do 5 deep breaths** to calm your body. **Visualize doing your best** effort, regardless of the outcome."
+  },
+  {
+    "input": "I feel stressed about living away from family.",
+    "output": "**Homesickness is common and is compounded by new responsibilities.** **Call family** or take a 5-minute walk to feel more grounded. **Create a small, personal ritual** for yourself."
+  },
+  {
+    "input": "I feel anxious when I can't finish tasks.",
+    "output": "**Incomplete tasks create a feeling of chaos.** **Take 2 deep breaths** and accept that you can't do everything. **Focus on completing one small, easy task** right now."
+  },
+  {
+    "input": "I feel sad about personal setbacks.",
+    "output": "**Setbacks happen to everyone—it's okay to feel sad.** **Take a short walk** or journal your thoughts to process the feelings. **Focus on the lessons learned.**"
+  },
+  {
+    "input": "I feel anxious about financial issues.",
+    "output": "**Money worries are a heavy reality in college.** **Take 5 deep breaths** to center yourself. **List one small, concrete step** you can take to address the issue."
+  },
+  {
+    "input": "I feel overwhelmed by too many classes.",
+    "output": "**A high course load is genuinely stressful.** **Take short breaks between sessions** to rest your mind. **Breathe deeply** and focus on the content of the class you are *in*."
+  },
+  {
+    "input": "I feel nervous during online classes.",
+    "output": "**Online classes can feel isolating and stressful.** **Take a 2-minute stretching or breathing break** before you log on. **Prepare one note** to type in the chat."
+  },
+  {
+    "input": "I feel stressed about roommates.",
+    "output": "**Roommate conflicts are a brutal source of stress in your home space.** **Step outside for a few minutes** for space and fresh air. **Practice deep breathing** before trying to talk to them."
+  },
+  {
+    "input": "I feel unmotivated to exercise.",
+    "output": "**Motivation for exercise is hard to find when you're stressed.** **Try a 5-minute walk** or light stretching—just 5 minutes. **Focus on how your body feels** after the movement."
+  },
+  {
+    "input": "I feel anxious about exams results.",
+    "output": "**Waiting for results is stressful and out of your control.** **Take 5 deep breaths** and consciously distract yourself with a small, engaging activity. **Remind yourself that the work is done.**"
+  },
+  {
+    "input": "I feel lonely even when busy.",
+    "output": "**Busyness is not the same as connection, and your loneliness is valid.** **Take a moment to journal your thoughts** about what you truly need. **Go for a short walk** and notice the world around you."
+  },
+  {
+    "input": "I feel overwhelmed by personal expectations.",
+    "output": "**The bar you set for yourself is too high and weighing you down.** **Take a 5-minute break** and practice mindful breathing. **Focus on just meeting the requirement** for one assignment."
+  },
+  {
+    "input": "I feel stressed about upcoming assignments.",
+    "output": "**Assignment stress is a constant burden.** **Break your tasks into small steps** and only look at the first one. **Take 2-minute breathing breaks** between each step."
+  },
+  {
+    "input": "I feel anxious meeting new classmates.",
+    "output": "**New social situations are nerve-wracking.** **Take a deep breath** and remember you don't need to be best friends. **Start with a simple, friendly hello** and an honest comment about the class."
+  },
+  {
+    "input": "I feel unmotivated after a long day.",
+    "output": "**Long days are exhausting, and your energy is naturally low.** **Take a short walk or do a brief breathing exercise** to refresh. **Prioritize sleep** over one more task."
+  },
+  {
+    "input": "I feel nervous about trying new activities.",
+    "output": "**It takes courage to try new things.** **Take 5 deep breaths** and focus on the excitement, not the fear. **Start with one small, low-commitment step** toward the activity."
+  },
+  {
+    "input": "I feel sad when I compare myself to others.",
+    "output": "**Comparison is a thief of joy—your life is not their life.** **Focus on one small, personal achievement today.** **Breathe deeply** and affirm your unique path."
+  },
+  {
+    "input": "I feel anxious about attending workshops.",
+    "output": "**Workshops can feel intimidating and high-pressure.** **Take a short walk** or do 2 minutes of deep breathing before joining. **Focus on being a listener** first."
+  },
+  {
+    "input": "I feel stressed about group assignments.",
+    "output": "**Group work is challenging due to the reliance on others.** **Focus on your part of the assignment** and make it excellent. **Take short breaks** to reset your focus."
+  },
+  {
+    "input": "I feel lonely on weekends.",
+    "output": "**Weekends can be the hardest time to feel connected.** **Call a friend or family member** you trust. **Take a short walk outside** and explore your surroundings."
+  },
+  {
+    "input": "I feel unmotivated to study after failing a test.",
+    "output": "**Failure can drain your will to try again.** **Take a 5-minute break** to process the feeling. **Focus on one small revision task** to regain momentum."
+  },
+  {
+    "input": "I feel anxious about asking for help.",
+    "output": "**Asking for help is a sign of self-awareness and strength.** **Take a deep breath** and acknowledge the difficulty. **Start by asking one simple, easy question.**"
+  },
+  {
+    "input": "I feel stressed about club responsibilities.",
+    "output": "**Club duties can quickly become overwhelming.** **Take a short walk** to clear your head. **Do a 2-minute breathing exercise** and set one realistic boundary for your time."
+  },
+  {
+    "input": "I feel nervous speaking in front of peers.",
+    "output": "**Public speaking anxiety is a universal fear.** **Focus on your first sentence** and take deep breaths. **Remind yourself that your peers are supportive.**"
+  },
+  {
+    "input": "I feel sad about being ignored by friends.",
+    "output": "**Feeling ignored is hurtful and difficult.** **Reach out gently to one person** you trust. **Take a short walk** to clear your mind and focus on self-care."
+  },
+  {
+    "input": "I feel anxious about participating in debates.",
+    "output": "**Debates are high-stakes and stressful.** **Take 5 deep breaths** to calm your nerves. **Focus on presenting one point clearly** and then letting go."
+  },
+  {
+    "input": "I feel overwhelmed balancing studies and personal life.",
+    "output": "**That balance is a constant negotiation—you can't win every battle.** **Schedule short breaks** for yourself. **Breathe deeply** to reset your overwhelmed mind."
+  },
+  {
+    "input": "I feel unmotivated to complete projects.",
+    "output": "**Motivation for long projects is hard to sustain.** **Start with 5 minutes of focused work** on the project. **Reward yourself** with a break immediately afterward."
+  },
+  {
+    "input": "I feel nervous meeting seniors.",
+    "output": "**Meeting seniors can be intimidating, but they were once in your shoes.** **Take a deep breath** and remember they are just students too. **Approach one person** with a simple, respectful question."
+  },
+  {
+    "input": "I feel stressed about hostel life.",
+    "output": "**Hostel adjustments are tough because it's a new environment.** **Take a 5-minute walk** for space and quiet. **Practice a short breathing exercise** to feel grounded in your room."
+  },
+  {
+    "input": "I feel lonely despite having friends.",
+    "output": "**Loneliness can exist even when you're not alone.** **Take a moment to journal** what kind of connection you're truly missing. **Step outside for fresh air** and a change of pace."
+  },
+  {
+    "input": "I feel anxious about online exams.",
+    "output": "**Online exams add a layer of technological stress.** **Take deep breaths** and focus on one question at a time. **Make sure your setup is ready 10 minutes beforehand.**"
+  },
+  {
+    "input": "I feel sad about missing family events.",
+    "output": "**Missing family events is a painful part of being away.** **Call family or write a short message** to feel connected. **Take a short walk** to refresh your mood."
+  },
+  {
+    "input": "I feel overwhelmed by deadlines and projects.",
+    "output": "**The pile-up of work is genuinely heavy.** **Break your work into small, actionable tasks** and list them out. **Take short walking breaks** after each completed task."
+  },
+  {
+    "input": "I feel anxious about starting a new semester.",
+    "output": "**New beginnings are stressful because of the uncertainty.** **Take 5 deep breaths** and acknowledge the transition. **Plan one small step** for today to prepare (e.g., organize one folder)."
+  },
+  {
+    "input": "I feel unmotivated to join online classes.",
+    "output": "**Online classes can make it hard to feel engaged.** **Take a short walk or stretch** before you join the session. **Sit up straight** and focus on one small action item."
+  },
+  {
+    "input": "I feel stressed about my performance in activities.",
+    "output": "**Performance pressure is normal when you care about the activity.** **Focus on doing your best effort** instead of the outcome. **Take a short breathing break** to reset."
+  },
+  {
+    "input": "I feel nervous about group discussions.",
+    "output": "**Discussion nerves are common, and it's okay to wait your turn.** **Take 2 deep breaths** and contribute one thought at a time."
+  },
+  {
+    "input": "I feel sad about being away from loved ones.",
+    "output": "**Distance is hard, and your sadness is completely valid.** **Call or message someone close** and take a short walk to refresh."
+  }
+]
