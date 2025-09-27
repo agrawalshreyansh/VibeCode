@@ -2,12 +2,30 @@
 import Navbar from '@/components/navbar';
 import React, { useState, useEffect } from 'react';
 import { Search, Bell, Settings, User, BarChart3, Users, Calendar, Award, ChevronRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 const MoodMateDashboard = () => {
+  const router = useRouter();
+  const [userName, setUserName] = useState('');
   const [activeTab, setActiveTab] = useState('1 Week');
   const [animationKey, setAnimationKey] = useState(0);
 
   useEffect(() => {
+    // Check if user is logged in
+    const authData = localStorage.getItem('userAuth');
+    if (!authData) {
+      router.push('/auth');
+    }
+  }, [router]);
+
+  useEffect(() => {
+    // Get user data from localStorage
+    const healthData = localStorage.getItem('healthAssessment');
+    if (healthData) {
+      const userData = JSON.parse(healthData);
+      setUserName(userData.name || 'User');
+    }
+
     const interval = setInterval(() => {
       setAnimationKey(prev => prev + 1);
     }, 3000);
@@ -131,7 +149,7 @@ const MoodMateDashboard = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-10">
           <div className="flex items-center gap-3">
-            <h1 className="text-4xl font-bold text-amber-900">Hello, XYZ!</h1>
+            <h1 className="text-4xl font-bold text-amber-900">Hello, {userName}!</h1>
             <WaveAnimation />
           </div>
 
