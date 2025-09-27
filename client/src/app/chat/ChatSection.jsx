@@ -1,6 +1,7 @@
 // ChatSection.js (Full Dynamic Version)
 'use client';
 import React, { useState, useEffect, useRef } from 'react';
+import { tts } from './textToSpeech';
 import { Send, Settings, CheckCircle, Headphones, Download, Mic, Image, Paperclip, Smile, Search, Plus, Trash2 } from 'lucide-react'; 
 import { useChat } from './ChatContext'; // Import the context hook
 import SettingsModal from '@/components/SettingsModal'; // Import settings modal
@@ -222,11 +223,25 @@ export default function ChatSection() {
                         </div>
                     </div>
                     {/* Trash Button for Active Chat */}
-                    {currentChatId && (
+                                        {currentChatId && (
                         <div className="flex space-x-2">
-                            <button className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600">
-                                <Headphones className="w-5 h-5"/>
-                            </button>
+                                                        <button 
+                                                            className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600"
+                                                            title="Speak last response"
+                                                            onClick={async () => {
+                                                                // Find the most recent assistant message
+                                                                const lastAssistant = [...messages].reverse().find(m => m.sender !== 'user' && typeof m.content === 'string');
+                                                                if (!lastAssistant) return;
+                                                                try {
+                                                                    await tts(lastAssistant.content);
+                                                                } catch (e) {
+                                                                    // eslint-disable-next-line no-alert
+                                                                    alert('TTS failed: ' + (e?.message || e));
+                                                                }
+                                                            }}
+                                                        >
+                                                                <Headphones className="w-5 h-5"/>
+                                                        </button>
                             <button 
                                 className="p-2 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600"
                                 onClick={() => setShowSettings(true)}
