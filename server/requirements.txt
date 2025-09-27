@@ -5,3 +5,4 @@ httpx
 python-multipart
 openai>=1.40.0
 afinn
+requests
