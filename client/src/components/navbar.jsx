@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
 import React from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 // Using standard lucide icons that are closest matches to the image
-import { BarChart3, Users, User, ArrowLeft } from 'lucide-react'; 
+import { BarChart3, Users, User, ArrowLeft, Settings, LogOut } from 'lucide-react'; 
 
 // Define navigation items with their icons and routes.
 const navItems = [
@@ -75,6 +75,13 @@ export default function Sidebar() {
     );
   };
 
+  const handleLogout = () => {
+    // Clear all localStorage data
+    localStorage.clear();
+    // Redirect to login/auth page
+    router.push('/auth');
+  };
+
   return (
     // 1. Added rounded-3xl to the main div for rounded corners
     // 2. Added justify-between to space the elements (logo, navigation, bottom button)
@@ -106,6 +113,22 @@ export default function Sidebar() {
         >
           <ArrowLeft className="w-6 h-6 text-white/70 transform rotate-180" /> 
         </div>
+      </div>
+
+      {/* Logout and Settings Buttons */}
+      <div className="space-y-4">
+        <button
+          onClick={() => router.push('/settings')}
+          className="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-white/20 transition-all"
+        >
+          <Settings className="w-5 h-5 text-white" />
+        </button>
+        <button
+          onClick={handleLogout}
+          className="w-10 h-10 rounded-xl flex items-center justify-center hover:bg-white/20 transition-all"
+        >
+          <LogOut className="w-5 h-5 text-white" />
+        </button>
       </div>
     </div>
   );

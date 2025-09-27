@@ -1,0 +1,178 @@
+/* Base styles to match image design */
+.font-sans {
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Custom styles for pill selection (Gender) to match image */
+.selection-pill input[type="radio"]:checked + .pill-label {
+  background-color: #E2F4EA; /* Lighter green background for selected state */
+  border-color: #62BF87; /* Green border */
+  color: #3C754E; /* Darker green text */
+  font-weight: 600;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08); /* Subtle shadow for selected */
+}
+.pill-label {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid #E0DEDB; /* Light gray border for unselected */
+  border-radius: 9999px; /* Full rounded corners (pill shape) */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #707070; /* Medium gray text */
+  background-color: white; /* White background for unselected */
+  font-weight: 500;
+  min-width: 5rem; /* Ensure minimum width for pills */
+  text-align: center;
+}
+.pill-label:hover {
+  background-color: #F8F8F8; /* Very light hover effect */
+  border-color: #C0C0C0; /* Slightly darker border on hover */
+}
+
+/* Custom styles for eating option cards (matching image) */
+.eating-option-card input[type="radio"]:checked + .option-label {
+  background-color: #E2F4EA; /* Lighter green background for selected state */
+  border-color: #62BF87; /* Green border */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Stronger shadow for selected card */
+  color: #3C754E; /* Darker green text */
+  font-weight: 600;
+}
+.option-label {
+  display: block;
+  padding: 1rem;
+  border: 1px solid #E0DEDB; /* Light gray border for unselected */
+  border-radius: 1rem; /* Consistent rounded corners */
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  color: #4A4A4A; /* Darker text */
+  background-color: white;
+  font-weight: 500;
+}
+.option-label:hover {
+  border-color: #A0A0A0; /* Slightly darker hover border */
+  background-color: #F8F8F8;
+}
+
+/* Custom range slider thumb and track styles to match image */
+/* For Webkit browsers (Chrome, Safari, Edge) */
+.custom-range-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px; /* Increased size of thumb */
+  height: 24px;
+  border-radius: 50%; /* Circular thumb */
+  background: #62BF87; /* Green thumb */
+  cursor: grab;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Shadow for the thumb */
+  margin-top: -8px; /* Adjust thumb vertical position */
+}
+.custom-range-slider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 8px; /* Slightly thicker track */
+  cursor: pointer;
+  background: #F0EBE9; /* Track background color from image */
+  border-radius: 4px; /* Rounded track */
+}
+
+/* For Firefox browsers */
+.custom-range-slider::-moz-range-thumb {
+  width: 24px; /* Increased size of thumb */
+  height: 24px;
+  border-radius: 50%; /* Circular thumb */
+  background: #62BF87; /* Green thumb */
+  cursor: grab;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Shadow for the thumb */
+  border: none; /* Remove default border */
+}
+.custom-range-slider::-moz-range-track {
+  width: 100%;
+  height: 8px; /* Slightly thicker track */
+  cursor: pointer;
+  background: #F0EBE9; /* Track background color from image */
+  border-radius: 4px; /* Rounded track */
+}
+
+/* For focus state of range input */
+.custom-range-slider:focus {
+  outline: none; /* Remove default focus outline */
+}
+.custom-range-slider:focus::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px rgba(98, 191, 135, 0.5); /* Green ring on focus */
+}
+.custom-range-slider:focus::-moz-range-thumb {
+  box-shadow: 0 0 0 3px rgba(98, 191, 135, 0.5); /* Green ring on focus */
+}
+
+/* Ensuring form-radio (for Yes/No) matches image's checkmark style */
+.form-radio {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-block;
+  position: relative;
+  width: 1.5rem; /* h-6, w-6 */
+  height: 1.5rem; /* h-6, w-6 */
+  border-radius: 50%;
+  border: 2px solid #D1D5DB; /* Default border color */
+  background-color: white;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.form-radio:checked {
+  background-color: #62BF87; /* Fill with green when checked */
+  border-color: #62BF87; /* Green border when checked */
+}
+
+.form-radio:checked::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: 0.5rem; /* Checkmark size */
+  height: 1rem;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+}
+
+.form-radio:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(98, 191, 135, 0.5); /* Green ring on focus */
+}
+
+/* Ensure the text color of the labels is consistent */
+/* .text-[#343434] { color: #343434; }
+.text-[#62BF87] { color: #62BF87; }
+.bg-[#FDF9F6] { background-color: #FDF9F6; }
+.bg-[#62BF87] { background-color: #62BF87; }
+.border-[#62BF87] { border-color: #62BF87; }
+.hover\:bg-[#52a674]:hover { background-color: #52a674; }
+.focus\:ring-[#62BF87]:focus { --tw-ring-color: #62BF87; }
+.bg-[#F0EBE9] { background-color: #F0EBE9; } For slider track */
+
+/* You might want to define custom colors in tailwind.config.js for better maintainability */
+/*
+// tailwind.config.js
+module.exports = {
+  theme: {
+    extend: {
+      colors: {
+        'light-bg': '#FDF9F6',
+        'dark-text': '#343434',
+        'primary-green': '#62BF87',
+        'light-green': '#E2F4EA',
+        'dark-green-text': '#3C754E',
+        'slider-track': '#F0EBE9',
+        'input-border': '#E0DEDB',
+        // Add more as needed
+      },
+      borderRadius: {
+        '2xl': '1rem', // Tailwind's default 2xl is 0.5rem. Image looks more like 1rem.
+        '3xl': '2rem', // Adjusted to match the larger card radius in the image
+      }
+    },
+  },
+  plugins: [],
+};
+*/
