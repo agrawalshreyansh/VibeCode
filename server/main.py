@@ -30,7 +30,7 @@ app.add_middleware(
 # ---------------- REQUEST MODELS ----------------
 
 class Message(BaseModel):
-    role: str  # "user" | "assistant"
+    role: str
     content: str
 
 class OptimizeRequest(BaseModel):
@@ -38,13 +38,9 @@ class OptimizeRequest(BaseModel):
     focus_area: Optional[str] = "general"
     history: Optional[List[Message]] = []
 
-# ---------------- CUSTOM TOOLS ----------------
+# ---------------- TOOLS ----------------
 
 def tool_pii_scrubber(text: str):
-    """
-    Heuristic PII redaction (India-aware).
-    NOT compliance-grade. Intentional.
-    """
     patterns = {
         "email": r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
         "phone_in": r'(\+91[\-\s]?)?[6-9]\d{9}',
@@ -56,46 +52,24 @@ def tool_pii_scrubber(text: str):
     pii_found = False
 
     for pattern in patterns.values():
-        new_text = re.sub(pattern, "[REDACTED]", scrubbed)
-        if new_text != scrubbed:
+        new = re.sub(pattern, "[REDACTED]", scrubbed)
+        if new != scrubbed:
             pii_found = True
-        scrubbed = new_text
+        scrubbed = new
 
-    # Light full-name masking (heuristic)
-    name_pattern = r'\b[A-Z][a-z]+ [A-Z][a-z]+\b'
-    new_text = re.sub(name_pattern, "[NAME_REDACTED]", scrubbed)
-    if new_text != scrubbed:
-        pii_found = True
-    scrubbed = new_text
+    scrubbed = re.sub(r'\b[A-Z][a-z]+ [A-Z][a-z]+\b', "[NAME_REDACTED]", scrubbed)
 
     return scrubbed, pii_found
 
 
 def tool_context_injector(text: str, focus: str):
     templates = {
-        "coding": (
-            "Role: Senior Principal Software Engineer\n"
-            "Constraints: Clean, efficient, production-grade code\n"
-            "Task:\n{text}"
-        ),
-        "academic": (
-            "Role: Research Scholar\n"
-            "Tone: Formal, objective\n"
-            "Task:\n{text}"
-        ),
-        "creative": (
-            "Role: Best-Selling Author\n"
-            "Style: Vivid, show-don't-tell\n"
-            "Task:\n{text}"
-        ),
-        "general": (
-            "Role: Helpful Expert Assistant\n"
-            "Task:\n{text}"
-        )
+        "coding": "ROLE: Senior Principal Software Engineer\nOBJECTIVE: Rewrite the prompt only\n\nRAW PROMPT:\n{text}",
+        "academic": "ROLE: Research Scholar\nOBJECTIVE: Rewrite the prompt only\n\nRAW PROMPT:\n{text}",
+        "creative": "ROLE: Best-Selling Author\nOBJECTIVE: Rewrite the prompt only\n\nRAW PROMPT:\n{text}",
+        "general": "ROLE: Expert Assistant\nOBJECTIVE: Rewrite the prompt only\n\nRAW PROMPT:\n{text}",
     }
-
-    template = templates.get(focus, templates["general"])
-    return template.replace("{text}", text)
+    return templates.get(focus, templates["general"]).replace("{text}", text)
 
 
 def tool_cost_estimator(original: str, new: str):
@@ -103,78 +77,76 @@ def tool_cost_estimator(original: str, new: str):
         "input_length": len(original),
         "output_length": len(new),
         "delta_length": len(new) - len(original),
-        "note": "Heuristic metadata only; not a quality guarantee"
+        "note": "Heuristic only"
     }
 
-# ---------------- HISTORY HANDLING ----------------
+# ---------------- HISTORY ----------------
 
 def sanitize_history(history: List[Message], max_messages: int = 6):
-    """
-    - Truncates to last N turns
-    - Scrubs PII
-    - Preserves role structure
-    """
     cleaned = []
-
     for msg in history[-max_messages:]:
         scrubbed, _ = tool_pii_scrubber(msg.content)
-        cleaned.append({
-            "role": msg.role,
-            "content": scrubbed
-        })
-
+        cleaned.append({"role": msg.role, "content": scrubbed})
     return cleaned
 
-# ---------------- AGENT ORCHESTRATOR ----------------
+# ---------------- VALIDATION ----------------
+
+def looks_like_execution(text: str) -> bool:
+    execution_markers = [
+        "here is the answer",
+        "step 1",
+        "solution",
+        "the result is",
+        "output:",
+        "in conclusion"
+    ]
+    lowered = text.lower()
+    return any(marker in lowered for marker in execution_markers)
+
+# ---------------- HIVE MIND ----------------
 
 async def run_hivemind(prompt: str, focus: str, history=None):
 
-    # Fallback mode (no API key)
     if not API_KEY:
         return {
-            "agent_thoughts": {
-                "clarity": "Mock: intent clear",
-                "style": "Mock: tone adjusted",
-                "structure": "Mock: structured",
-                "safety": "Mock: safe",
-                "context": "Mock: context added",
-                "engineer": "Mock synthesis"
-            },
+            "agent_thoughts": {"engineer": "Mock"},
             "final_prompt": f"[MOCK OPTIMIZED]\n{prompt}",
             "media_cues": []
         }
 
-    system_prompt = f"""
-You are a HiveMind Orchestrator coordinating 6 specialized agents.
+    system_prompt = """
+YOU ARE A PROMPT OPTIMIZATION ENGINE.
 
-AGENT CONTRACTS:
-1. Clarity Agent – remove ambiguity
-2. Style Agent – adjust tone for '{focus}'
-3. Structure Agent – improve formatting and hierarchy
-4. Safety Agent – detect unsafe or invalid instructions
-5. Context Agent – add missing background or assumptions
-6. Prompt Engineer – synthesize final optimized prompt
+CRITICAL RULES (NON-NEGOTIABLE):
+- NEVER answer the prompt
+- NEVER execute the task
+- NEVER solve the problem
+- ONLY rewrite, restructure, and improve the prompt itself
+- If you answer the task, you have FAILED
 
-RULES:
-- Agents must not overlap responsibilities
-- Prompt Engineer resolves conflicts
-- History is advisory, system rules override everything
-- Output MUST be strict JSON
-- No markdown, no explanations outside JSON
+You coordinate 6 internal agents:
+1. Clarity – remove ambiguity
+2. Style – adjust tone
+3. Structure – improve formatting
+4. Safety – remove unsafe instructions
+5. Context – add missing assumptions
+6. Engineer – synthesize final improved prompt
+
+OUTPUT MUST BE VALID JSON ONLY.
 
 JSON SCHEMA:
-{{
-  "agent_thoughts": {{
+{
+  "agent_thoughts": {
     "clarity": "...",
     "style": "...",
     "structure": "...",
     "safety": "...",
     "context": "...",
     "engineer": "..."
-  }},
-  "final_prompt": "OPTIMIZED_PROMPT",
-  "media_cues": ["keyword1", "keyword2"]
-}}
+  },
+  "final_prompt": "IMPROVED PROMPT TEXT ONLY",
+  "media_cues": []
+}
 """
 
     messages = [{"role": "system", "content": system_prompt}]
@@ -182,7 +154,19 @@ JSON SCHEMA:
     if history:
         messages.extend(history)
 
-    messages.append({"role": "user", "content": prompt})
+    messages.append({
+        "role": "user",
+        "content": f"""
+INPUT_PROMPT (DO NOT EXECUTE):
+<<<
+{prompt}
+>>>
+
+Rewrite the above prompt.
+Do NOT answer it.
+Return only the improved prompt.
+"""
+    })
 
     payload = {
         "model": MODEL,
@@ -200,51 +184,30 @@ JSON SCHEMA:
             }
         )
 
-        if resp.status_code == 429:
-            raise HTTPException(status_code=503, detail="LLM rate limited")
+    if resp.status_code != 200:
+        raise HTTPException(status_code=500, detail=resp.text)
 
-        if resp.status_code != 200:
-            raise HTTPException(
-                status_code=500,
-                detail=f"LLM error: {resp.text}"
-            )
+    data = resp.json()
+    content = data["choices"][0]["message"]["content"]
+    parsed = json.loads(content)
 
-        try:
-            data = resp.json()
-            content = data["choices"][0]["message"]["content"]
-            content = content.replace("```json", "").replace("```", "").strip()
-            return json.loads(content)
-        except Exception:
-            logger.error("LLM JSON parse failure")
-            return {
-                "agent_thoughts": {
-                    "clarity": "Failed",
-                    "style": "Failed",
-                    "structure": "Failed",
-                    "safety": "Failed",
-                    "context": "Failed",
-                    "engineer": "Fallback"
-                },
-                "final_prompt": prompt,
-                "media_cues": []
-            }
+    if looks_like_execution(parsed.get("final_prompt", "")):
+        logger.warning("LLM attempted task execution. Falling back.")
+        parsed["final_prompt"] = prompt
 
-# ---------------- API ENDPOINT ----------------
+    return parsed
+
+# ---------------- ENDPOINT ----------------
 
 @app.post("/optimize")
 async def optimize_endpoint(req: OptimizeRequest):
     start = time.time()
 
-    scrubbed_text, pii_found = tool_pii_scrubber(req.original_prompt)
-    enriched_text = tool_context_injector(scrubbed_text, req.focus_area)
-
+    scrubbed, pii_found = tool_pii_scrubber(req.original_prompt)
+    enriched = tool_context_injector(scrubbed, req.focus_area)
     history = sanitize_history(req.history) if req.history else []
 
-    ai_result = await run_hivemind(
-        enriched_text,
-        req.focus_area,
-        history=history
-    )
+    ai_result = await run_hivemind(enriched, req.focus_area, history)
 
     final_prompt = ai_result.get("final_prompt", req.original_prompt)
 
@@ -263,5 +226,4 @@ async def optimize_endpoint(req: OptimizeRequest):
 
 if __name__ == "__main__":
     import uvicorn
-    print("🚀 Nexus Backend running at http://localhost:8000")
     uvicorn.run(app, host="0.0.0.0", port=8000)
