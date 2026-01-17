@@ -12,7 +12,7 @@ import httpx
 # ---------------- CONFIG ----------------
 
 API_KEY = os.getenv("OPENROUTER_API_KEY", "")
-MODEL = "google/gemini-2.0-flash-exp:free"
+MODEL = "arcee-ai/trinity-mini:free"
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger("NexusEngine")
