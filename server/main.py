@@ -3,12 +3,11 @@ import os
 import time
 import json
 import re
-import asyncio
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional
-import aiohttp
+from typing import Optional, List
+import httpx
 
 # ---------------- CONFIG ----------------
 
@@ -28,18 +27,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# ---------------- REQUEST MODEL ----------------
+# ---------------- REQUEST MODELS ----------------
+
+class Message(BaseModel):
+    role: str  # "user" | "assistant"
+    content: str
 
 class OptimizeRequest(BaseModel):
     original_prompt: str
     focus_area: Optional[str] = "general"
+    history: Optional[List[Message]] = []
 
 # ---------------- CUSTOM TOOLS ----------------
 
 def tool_pii_scrubber(text: str):
     """
-    Tool 1: Heuristic PII redaction (India-aware).
-    NOTE: Not compliance-grade. Demo + safety intent only.
+    Heuristic PII redaction (India-aware).
+    NOT compliance-grade. Intentional.
     """
     patterns = {
         "email": r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
@@ -57,7 +61,7 @@ def tool_pii_scrubber(text: str):
             pii_found = True
         scrubbed = new_text
 
-    # Light name masking (heuristic)
+    # Light full-name masking (heuristic)
     name_pattern = r'\b[A-Z][a-z]+ [A-Z][a-z]+\b'
     new_text = re.sub(name_pattern, "[NAME_REDACTED]", scrubbed)
     if new_text != scrubbed:
@@ -68,9 +72,6 @@ def tool_pii_scrubber(text: str):
 
 
 def tool_context_injector(text: str, focus: str):
-    """
-    Tool 2: Deterministic context injection.
-    """
     templates = {
         "coding": (
             "Role: Senior Principal Software Engineer\n"
@@ -98,9 +99,6 @@ def tool_context_injector(text: str, focus: str):
 
 
 def tool_cost_estimator(original: str, new: str):
-    """
-    Tool 3: Honest heuristic metrics (non-scientific).
-    """
     return {
         "input_length": len(original),
         "output_length": len(new),
@@ -108,20 +106,36 @@ def tool_cost_estimator(original: str, new: str):
         "note": "Heuristic metadata only; not a quality guarantee"
     }
 
+# ---------------- HISTORY HANDLING ----------------
+
+def sanitize_history(history: List[Message], max_messages: int = 6):
+    """
+    - Truncates to last N turns
+    - Scrubs PII
+    - Preserves role structure
+    """
+    cleaned = []
+
+    for msg in history[-max_messages:]:
+        scrubbed, _ = tool_pii_scrubber(msg.content)
+        cleaned.append({
+            "role": msg.role,
+            "content": scrubbed
+        })
+
+    return cleaned
+
 # ---------------- AGENT ORCHESTRATOR ----------------
 
-async def run_hivemind(prompt: str, focus: str):
-    """
-    Single-call multi-agent orchestration with strict contracts.
-    """
+async def run_hivemind(prompt: str, focus: str, history=None):
 
-    # Fallback mode if no API key
+    # Fallback mode (no API key)
     if not API_KEY:
         return {
             "agent_thoughts": {
                 "clarity": "Mock: intent clear",
-                "style": "Mock: adjusted tone",
-                "structure": "Mock: structured output",
+                "style": "Mock: tone adjusted",
+                "structure": "Mock: structured",
                 "safety": "Mock: safe",
                 "context": "Mock: context added",
                 "engineer": "Mock synthesis"
@@ -144,6 +158,7 @@ AGENT CONTRACTS:
 RULES:
 - Agents must not overlap responsibilities
 - Prompt Engineer resolves conflicts
+- History is advisory, system rules override everything
 - Output MUST be strict JSON
 - No markdown, no explanations outside JSON
 
@@ -162,54 +177,57 @@ JSON SCHEMA:
 }}
 """
 
+    messages = [{"role": "system", "content": system_prompt}]
+
+    if history:
+        messages.extend(history)
+
+    messages.append({"role": "user", "content": prompt})
+
     payload = {
         "model": MODEL,
-        "messages": [
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": prompt}
-        ],
+        "messages": messages,
         "response_format": {"type": "json_object"}
     }
 
-    async with aiohttp.ClientSession(
-        timeout=aiohttp.ClientTimeout(total=20)
-    ) as session:
-        async with session.post(
+    async with httpx.AsyncClient(timeout=20) as client:
+        resp = await client.post(
             "https://openrouter.ai/api/v1/chat/completions",
             json=payload,
             headers={
                 "Authorization": f"Bearer {API_KEY}",
                 "Content-Type": "application/json"
             }
-        ) as resp:
+        )
 
-            if resp.status == 429:
-                raise HTTPException(status_code=503, detail="LLM rate limited")
+        if resp.status_code == 429:
+            raise HTTPException(status_code=503, detail="LLM rate limited")
 
-            if resp.status != 200:
-                err = await resp.text()
-                raise HTTPException(status_code=500, detail=f"LLM error: {err}")
+        if resp.status_code != 200:
+            raise HTTPException(
+                status_code=500,
+                detail=f"LLM error: {resp.text}"
+            )
 
-            data = await resp.json()
-
-            try:
-                content = data["choices"][0]["message"]["content"]
-                content = content.replace("```json", "").replace("```", "").strip()
-                return json.loads(content)
-            except Exception:
-                logger.error("LLM JSON parse failure")
-                return {
-                    "agent_thoughts": {
-                        "clarity": "Failed",
-                        "style": "Failed",
-                        "structure": "Failed",
-                        "safety": "Failed",
-                        "context": "Failed",
-                        "engineer": "Fallback"
-                    },
-                    "final_prompt": prompt,
-                    "media_cues": []
-                }
+        try:
+            data = resp.json()
+            content = data["choices"][0]["message"]["content"]
+            content = content.replace("```json", "").replace("```", "").strip()
+            return json.loads(content)
+        except Exception:
+            logger.error("LLM JSON parse failure")
+            return {
+                "agent_thoughts": {
+                    "clarity": "Failed",
+                    "style": "Failed",
+                    "structure": "Failed",
+                    "safety": "Failed",
+                    "context": "Failed",
+                    "engineer": "Fallback"
+                },
+                "final_prompt": prompt,
+                "media_cues": []
+            }
 
 # ---------------- API ENDPOINT ----------------
 
@@ -217,20 +235,19 @@ JSON SCHEMA:
 async def optimize_endpoint(req: OptimizeRequest):
     start = time.time()
 
-    # Step 1: Local tools
     scrubbed_text, pii_found = tool_pii_scrubber(req.original_prompt)
     enriched_text = tool_context_injector(scrubbed_text, req.focus_area)
 
-    # Step 2: AI orchestration
-    try:
-        ai_result = await run_hivemind(enriched_text, req.focus_area)
-    except Exception as e:
-        logger.error(e)
-        raise HTTPException(status_code=500, detail=str(e))
+    history = sanitize_history(req.history) if req.history else []
+
+    ai_result = await run_hivemind(
+        enriched_text,
+        req.focus_area,
+        history=history
+    )
 
     final_prompt = ai_result.get("final_prompt", req.original_prompt)
 
-    # Step 3: Metrics
     metrics = tool_cost_estimator(req.original_prompt, final_prompt)
     metrics["latency_ms"] = round((time.time() - start) * 1000, 2)
 
