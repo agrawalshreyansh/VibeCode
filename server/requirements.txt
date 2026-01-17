@@ -1,8 +1,4 @@
 fastapi
 uvicorn
-python-dotenv
-httpx
-python-multipart
-openai>=1.40.0
-afinn
-requests
+aiohttp
+pydantic
