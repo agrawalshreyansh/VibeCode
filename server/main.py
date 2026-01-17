@@ -1,32 +1,25 @@
 import logging
-from pathlib import Path
+import os
+import time
+import json
+import re
+import asyncio
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from typing import Optional, Dict, Any
-import requests
-import json
-import dotenv
-import os
+from typing import Optional
+import aiohttp
 
-# Load .env deterministically: server/.env first, then project-root .env if present
-_SERVER_ENV = Path(__file__).resolve().parent / ".env"
-_ROOT_ENV = Path(__file__).resolve().parents[1] / ".env"
-dotenv.load_dotenv(dotenv_path=_SERVER_ENV, override=False)
-dotenv.load_dotenv(dotenv_path=_ROOT_ENV, override=False)
+# ---------------- CONFIG ----------------
 
-OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
-DEFAULT_MODEL = os.getenv("OPENROUTER_MODEL", "x-ai/grok-4-fast:free")
+API_KEY = os.getenv("OPENROUTER_API_KEY", "")
+MODEL = "google/gemini-2.0-flash-exp:free"
 
-logger = logging.getLogger("uvicorn.error")
-logger.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger("NexusEngine")
 
-if not OPENROUTER_API_KEY:
-    logger.warning("OPENROUTER_API_KEY not found; /send_prompt will return 500 until it is set.")
+app = FastAPI(title="Nexus Agentic Optimizer")
 
-app = FastAPI()
-
-# Enable CORS for all origins, methods, and headers
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -35,129 +28,223 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# In-memory storage for conversation context
-conversation_context: Dict[str, Any] = {}
+# ---------------- REQUEST MODEL ----------------
 
-# Request model for /send_prompt
-class PromptRequest(BaseModel):
-    prompt: str
-    previous_summary: Optional[str] = ""
-    user_context: Optional[str] = ""
-    model: Optional[str] = None
+class OptimizeRequest(BaseModel):
+    original_prompt: str
+    focus_area: Optional[str] = "general"
 
-def grok_response_with_brief_context(
-    prompt: str,
-    previous_summary: str = "",
-    user_context: str = "",
-    model: Optional[str] = None,
-) -> dict:
+# ---------------- CUSTOM TOOLS ----------------
+
+def tool_pii_scrubber(text: str):
     """
-    Sends prompt to Grok, gets assistant reply, and updates a short context summary (10-30 words).
+    Tool 1: Heuristic PII redaction (India-aware).
+    NOTE: Not compliance-grade. Demo + safety intent only.
     """
-    if not OPENROUTER_API_KEY:
-        raise HTTPException(status_code=500, detail="OPENROUTER_API_KEY not configured on server")
-
-    headers = {
-        "Authorization": f"Bearer {OPENROUTER_API_KEY}",
-        "Content-Type": "application/json",
+    patterns = {
+        "email": r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}',
+        "phone_in": r'(\+91[\-\s]?)?[6-9]\d{9}',
+        "aadhaar": r'\b\d{4}\s?\d{4}\s?\d{4}\b',
+        "pan": r'\b[A-Z]{5}[0-9]{4}[A-Z]\b'
     }
 
-    # Step 1: Get assistant reply
-    assistant_payload = {
-        "model": model or DEFAULT_MODEL,
+    scrubbed = text
+    pii_found = False
+
+    for pattern in patterns.values():
+        new_text = re.sub(pattern, "[REDACTED]", scrubbed)
+        if new_text != scrubbed:
+            pii_found = True
+        scrubbed = new_text
+
+    # Light name masking (heuristic)
+    name_pattern = r'\b[A-Z][a-z]+ [A-Z][a-z]+\b'
+    new_text = re.sub(name_pattern, "[NAME_REDACTED]", scrubbed)
+    if new_text != scrubbed:
+        pii_found = True
+    scrubbed = new_text
+
+    return scrubbed, pii_found
+
+
+def tool_context_injector(text: str, focus: str):
+    """
+    Tool 2: Deterministic context injection.
+    """
+    templates = {
+        "coding": (
+            "Role: Senior Principal Software Engineer\n"
+            "Constraints: Clean, efficient, production-grade code\n"
+            "Task:\n{text}"
+        ),
+        "academic": (
+            "Role: Research Scholar\n"
+            "Tone: Formal, objective\n"
+            "Task:\n{text}"
+        ),
+        "creative": (
+            "Role: Best-Selling Author\n"
+            "Style: Vivid, show-don't-tell\n"
+            "Task:\n{text}"
+        ),
+        "general": (
+            "Role: Helpful Expert Assistant\n"
+            "Task:\n{text}"
+        )
+    }
+
+    template = templates.get(focus, templates["general"])
+    return template.replace("{text}", text)
+
+
+def tool_cost_estimator(original: str, new: str):
+    """
+    Tool 3: Honest heuristic metrics (non-scientific).
+    """
+    return {
+        "input_length": len(original),
+        "output_length": len(new),
+        "delta_length": len(new) - len(original),
+        "note": "Heuristic metadata only; not a quality guarantee"
+    }
+
+# ---------------- AGENT ORCHESTRATOR ----------------
+
+async def run_hivemind(prompt: str, focus: str):
+    """
+    Single-call multi-agent orchestration with strict contracts.
+    """
+
+    # Fallback mode if no API key
+    if not API_KEY:
+        return {
+            "agent_thoughts": {
+                "clarity": "Mock: intent clear",
+                "style": "Mock: adjusted tone",
+                "structure": "Mock: structured output",
+                "safety": "Mock: safe",
+                "context": "Mock: context added",
+                "engineer": "Mock synthesis"
+            },
+            "final_prompt": f"[MOCK OPTIMIZED]\n{prompt}",
+            "media_cues": []
+        }
+
+    system_prompt = f"""
+You are a HiveMind Orchestrator coordinating 6 specialized agents.
+
+AGENT CONTRACTS:
+1. Clarity Agent – remove ambiguity
+2. Style Agent – adjust tone for '{focus}'
+3. Structure Agent – improve formatting and hierarchy
+4. Safety Agent – detect unsafe or invalid instructions
+5. Context Agent – add missing background or assumptions
+6. Prompt Engineer – synthesize final optimized prompt
+
+RULES:
+- Agents must not overlap responsibilities
+- Prompt Engineer resolves conflicts
+- Output MUST be strict JSON
+- No markdown, no explanations outside JSON
+
+JSON SCHEMA:
+{{
+  "agent_thoughts": {{
+    "clarity": "...",
+    "style": "...",
+    "structure": "...",
+    "safety": "...",
+    "context": "...",
+    "engineer": "..."
+  }},
+  "final_prompt": "OPTIMIZED_PROMPT",
+  "media_cues": ["keyword1", "keyword2"]
+}}
+"""
+
+    payload = {
+        "model": MODEL,
         "messages": [
-            {
-                "role": "user",
-                "content": (
-                    "You are a therapist / mental wellness companion. Provide support, guidance, and encouragement for mental wellness, "
-                    "stress management, and emotional well-being. Incorporate short breathing or relaxation exercises when relevant. "
-                    "Keep the answer concise, clear, and descriptive. If the user asks questions outside your domain, redirect gently.\n\n"
-                    f"chat user context:{user_context}\n"
-                    f"chat summary of convo context:{previous_summary}\n"
-                    f"Question: {prompt}"
-                )
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": prompt}
+        ],
+        "response_format": {"type": "json_object"}
+    }
+
+    async with aiohttp.ClientSession(
+        timeout=aiohttp.ClientTimeout(total=20)
+    ) as session:
+        async with session.post(
+            "https://openrouter.ai/api/v1/chat/completions",
+            json=payload,
+            headers={
+                "Authorization": f"Bearer {API_KEY}",
+                "Content-Type": "application/json"
             }
-        ]
-    }
+        ) as resp:
 
+            if resp.status == 429:
+                raise HTTPException(status_code=503, detail="LLM rate limited")
+
+            if resp.status != 200:
+                err = await resp.text()
+                raise HTTPException(status_code=500, detail=f"LLM error: {err}")
+
+            data = await resp.json()
+
+            try:
+                content = data["choices"][0]["message"]["content"]
+                content = content.replace("```json", "").replace("```", "").strip()
+                return json.loads(content)
+            except Exception:
+                logger.error("LLM JSON parse failure")
+                return {
+                    "agent_thoughts": {
+                        "clarity": "Failed",
+                        "style": "Failed",
+                        "structure": "Failed",
+                        "safety": "Failed",
+                        "context": "Failed",
+                        "engineer": "Fallback"
+                    },
+                    "final_prompt": prompt,
+                    "media_cues": []
+                }
+
+# ---------------- API ENDPOINT ----------------
+
+@app.post("/optimize")
+async def optimize_endpoint(req: OptimizeRequest):
+    start = time.time()
+
+    # Step 1: Local tools
+    scrubbed_text, pii_found = tool_pii_scrubber(req.original_prompt)
+    enriched_text = tool_context_injector(scrubbed_text, req.focus_area)
+
+    # Step 2: AI orchestration
     try:
-        response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers=headers,
-            data=json.dumps(assistant_payload),
-            timeout=60,
-        )
-        response.raise_for_status()
-        res_json = response.json()
-    except requests.HTTPError as e:
-        detail = e.response.text if e.response is not None else str(e)
-        raise HTTPException(status_code=502, detail=f"OpenRouter error: {detail}")
+        ai_result = await run_hivemind(enriched_text, req.focus_area)
     except Exception as e:
-        raise HTTPException(status_code=502, detail=f"OpenRouter request failed: {e}")
+        logger.error(e)
+        raise HTTPException(status_code=500, detail=str(e))
 
-    assistant_reply = res_json.get("choices", [{}])[0].get("message", {}).get("content", "")
+    final_prompt = ai_result.get("final_prompt", req.original_prompt)
 
-    # Step 2: Generate a short summary of this reply (10-30 words)
-    summary_prompt = f"Summarize the following text in 10-30 words, keeping only the important points: {assistant_reply}"
-    summary_payload = {
-        "model": model or DEFAULT_MODEL,
-        "messages": [
-            {"role": "user", "content": summary_prompt}
-        ]
-    }
-
-    try:
-        summary_response = requests.post(
-            "https://openrouter.ai/api/v1/chat/completions",
-            headers=headers,
-            data=json.dumps(summary_payload),
-            timeout=60,
-        )
-        summary_response.raise_for_status()
-        summary_json = summary_response.json()
-    except requests.HTTPError as e:
-        # If summarization fails, continue with empty brief summary
-        logger.warning("OpenRouter summary error: %s", e)
-        summary_json = {}
-    except Exception as e:
-        logger.warning("OpenRouter summary request failed: %s", e)
-        summary_json = {}
-
-    brief_summary = summary_json.get("choices", [{}])[0].get("message", {}).get("content", "")
-
-    # Step 3: Combine with previous summary
-    new_summary = f"{previous_summary} {brief_summary}".strip()
+    # Step 3: Metrics
+    metrics = tool_cost_estimator(req.original_prompt, final_prompt)
+    metrics["latency_ms"] = round((time.time() - start) * 1000, 2)
 
     return {
-        "response": assistant_reply,
-        "new_context": {
-            "summary": new_summary
-        }
+        "status": "success",
+        "scrubbed": pii_found,
+        "agents": ai_result.get("agent_thoughts", {}),
+        "optimized_prompt": final_prompt,
+        "metrics": metrics
     }
 
-@app.post("/send_prompt")
-async def send_prompt(data: PromptRequest):
-    global conversation_context
+# ---------------- RUN ----------------
 
-    result = grok_response_with_brief_context(
-        prompt=data.prompt,
-        previous_summary=data.previous_summary,
-        user_context=data.user_context,
-        model=data.model,
-    )
-
-    # Update in-memory context
-    conversation_context = result.get("new_context", {})
-    return {"status": "success", "response": result["response"], "new_context": conversation_context}
-
-@app.get("/get_context")
-async def get_context():
-    if not conversation_context:
-        return {"message": "No context available yet."}
-    return conversation_context
-
-@app.get("/health")
-async def health():
-    return {"status": "ok"}
-
-# Run using: uvicorn filename:app --reload
+if __name__ == "__main__":
+    import uvicorn
+    print("🚀 Nexus Backend running at http://localhost:8000")
+    uvicorn.run(app, host="0.0.0.0", port=8000)
